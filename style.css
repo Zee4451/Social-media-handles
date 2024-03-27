@@ -1,0 +1,97 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: rgb(83, 14, 14);
+    font-family: "Noto Sans TC", sans-serif;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: auto;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+img{
+    width: 100vw;
+    height: 30vh;
+    object-fit:fill;
+}
+.head{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(0, 0, 0, 0.815);
+    width: 100%;
+    height: 11rem;
+    color: white;
+}
+.head h1{
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    width: 100%;
+}
+
+.head p{
+    font-size: 17px;
+}
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+.links button{
+    margin: 20px;
+    width: 20rem;
+    height: 4rem;
+    border: none;
+    border-radius: 20px;
+}
+
+.links button span{
+    font-size: 25px;
+    text-decoration: none;
+    position: relative;
+    color: black;
+    bottom: 8px;
+}
+i{
+    position: relative;
+    right: 3rem;
+    font-size: 45px;
+    
+}
+.btn3 i{
+    position: relative;
+    right: 4rem;
+}
+.btn4 i{
+    position: relative;
+    right: 5rem;
+}
+.btn5 i{
+    position: relative;
+    right: 2rem;
+}
+.end{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 0.9rem;
+    color: whitE;
+    margin-bottom: 2rem;
+}
+.head h1,p{
+    padding: 8px;
+}
