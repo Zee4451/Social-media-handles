@@ -3,7 +3,7 @@ function openfb(){
     window.open(url1,)
 }
 function openIn(){
-    const url1 = "https://www.instagram.com/musharrifkhan/"
+    const url1 = "https://www.instagram.com/s.factordancecrew/"
     window.open(url1,)
 }
 function openWa(){
