@@ -3,60 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S. Factor Dance Crew | Social Links</title>
+    <title>S. Factor Dance Crew | Merry Christmas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Tauri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Snowfall Effect -->
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+    </div>
+
+    <!-- Christmas Decorations -->
+    <div class="christmas-decorations">
+        <div class="decoration tree-left">🎄</div>
+        <div class="decoration tree-right">🎄</div>
+        <div class="decoration santa">🎅</div>
+        <div class="decoration gift-left">🎁</div>
+        <div class="decoration gift-right">🎁</div>
+    </div>
+    
     <div class="container">
-        <div class="image-container">
-            <img src="./Sfactor.jpeg" alt="S. Factor Dance Crew" loading="lazy">
+        <div class="header-section">
+            <div class="image-container">
+                <img src="./Sfactor.jpeg" alt="S. Factor Dance Crew" loading="lazy">
+                <div class="christmas-corner top-left">🎄</div>
+                <div class="christmas-corner top-right">🎅</div>
+                <div class="christmas-corner bottom-left">🎁</div>
+                <div class="christmas-corner bottom-right">🎁</div>
+            </div>
+            
+            <div class="contact-info">
+                <h2>🎄 TALK TO US 🎄</h2>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>09340073167</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>8305668900</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>sfactorperformingart@gmail.com</span>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="head">
-            <h1>S. Factor Dance Crew</h1>
-            <p>Your one stop performing art solution</p>
-            <p><span style="text-decoration: underline;">Proprietor</span>: <span style="text-decoration: underline;">MAK-E</span></p>
+            <div class="christmas-banner">🎄 Merry Christmas! 🎄</div>
+            <div class="title-wrapper">
+                <h1>S. Factor Dance Crew</h1>
+                <div class="subtitle">Your one stop performing art solution</div>
+                <div class="proprietor">
+                    <span class="label">Proprietor:</span>
+                    <span class="name">MAK-E</span>
+                </div>
+                <div class="christmas-message">Wishing You Joy & Dance This Holiday Season! 🎄✨</div>
+            </div>
         </div>
 
         <div class="links">
-            <button onclick="openfb()" aria-label="Facebook">
-                <i class="fa-brands fa-facebook-messenger"></i>
+            <button onclick="openfb()" aria-label="Connect on Facebook" class="social-btn facebook">
+                <div class="icon-wrapper">
+                    <i class="fa-brands fa-facebook-messenger"></i>
+                </div>
                 <span>Facebook</span>
             </button>
 
-            <button onclick="openIn()" aria-label="Instagram">
-                <i class="fa-brands fa-instagram"></i>
+            <button onclick="openIn()" aria-label="Follow on Instagram" class="social-btn instagram">
+                <div class="icon-wrapper">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
                 <span>Instagram</span>
             </button>
 
-            <button onclick="openWa()" aria-label="WhatsApp">
-                <i class="fa-brands fa-whatsapp"></i>
+            <button onclick="openWa()" aria-label="Chat on WhatsApp" class="social-btn whatsapp">
+                <div class="icon-wrapper">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
                 <span>WhatsApp</span>
             </button>
 
-            <button onclick="openTg()" aria-label="Telegram">
-                <i class="fa-brands fa-telegram-plane"></i>
+            <button onclick="openTg()" aria-label="Join us on Telegram" class="social-btn telegram">
+                <div class="icon-wrapper">
+                    <i class="fa-brands fa-telegram-plane"></i>
+                </div>
                 <span>Telegram</span>
             </button>
 
-            <button onclick="openGm()" aria-label="Gmail">
-                <i class="fa-solid fa-envelope-open-text"></i>
+            <button onclick="openGm()" aria-label="Email us" class="social-btn gmail">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
                 <span>Gmail</span>
             </button>
 
-            <button onclick="openCt()" aria-label="Contact">
-                <i class="fa-solid fa-address-book"></i>
-                <span>Add to contact</span>
+            <button onclick="openCt()" aria-label="Save Contact" class="social-btn contact">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-address-book"></i>
+                </div>
+                <span>Add Contact</span>
             </button>
         </div>
 
         <div class="end">
-            <p>In the memory of SUNNY THAKUR</p>
+            <p>In loving memory of</p>
+            <p class="memory-name">SUNNY THAKUR</p>
             <p>Founder of S. Factor Dance Crew</p>
+            <div class="christmas-footer">Season's Greetings & Happy New Year! 🎄✨</div>
         </div>
     </div>
 

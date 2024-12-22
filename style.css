@@ -1,113 +1,281 @@
+/* Core Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Christmas Animations */
 @keyframes gradientBG {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes shine {
+    0% { background-position: -100% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-10vh) translateX(-10px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) translateX(10px) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+@keyframes borderGlow {
+    0% { border-color: rgba(196, 30, 58, 0.3); }
+    50% { border-color: rgba(26, 71, 42, 0.5); }
+    100% { border-color: rgba(196, 30, 58, 0.3); }
+}
+
+/* Base Styles with Christmas Theme */
 body {
-    font-family: 'Tauri', sans-serif;
-    background: linear-gradient(-45deg, #1a0f2e, #2c1810, #451a1a, #2e0f1a);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a472a 0%, #2d5a27 50%, #1a472a 100%);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    min-height: 100vh;
+    color: white;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
 }
 
 .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Snowfall Effect */
+.snowflakes {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.snowflake {
+    position: fixed;
+    color: white;
+    font-size: 1.5em;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    animation: snowfall linear infinite;
+    pointer-events: none;
+}
+
+.snowflake:nth-child(2n) { animation-duration: 8s; left: 20%; }
+.snowflake:nth-child(3n) { animation-duration: 10s; left: 40%; }
+.snowflake:nth-child(4n) { animation-duration: 12s; left: 60%; }
+.snowflake:nth-child(5n) { animation-duration: 15s; left: 80%; }
+
+/* Image Container */
+.image-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: float 6s ease-in-out infinite;
+    background: white;
+    padding: 2rem;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    border: 2px solid #c41e3a;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(20px);
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+}
+
+/* Christmas Corners */
+.christmas-corner {
+    position: absolute;
+    font-size: 2rem;
+    z-index: 2;
+    animation: float 3s ease-in-out infinite;
+}
+
+.top-left { top: 10px; left: 10px; }
+.top-right { top: 10px; right: 10px; animation-delay: 0.5s; }
+.bottom-left { bottom: 10px; left: 10px; animation-delay: 1s; }
+.bottom-right { bottom: 10px; right: 10px; animation-delay: 1.5s; }
+
+/* Contact Info */
+.contact-info {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(196, 30, 58, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    border: 2px solid rgba(196, 30, 58, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.contact-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    background: linear-gradient(45deg, #ffffff, #c41e3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+    gap: 1rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(196, 30, 58, 0.3);
 }
 
-.image-container {
-    width: 100%;
-    height: 35vh;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    margin-bottom: 20px;
-    transform: translateZ(0);
-    transition: transform 0.3s ease;
+.contact-item:hover {
+    background: rgba(196, 30, 58, 0.2);
+    transform: translateX(10px);
 }
 
-.image-container:hover {
-    transform: translateY(-5px);
-}
-
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
+/* Header Section */
 .head {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
     text-align: center;
-    color: white;
+    padding: 3rem;
+    background: rgba(196, 30, 58, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
     width: 100%;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transform: translateZ(0);
+    max-width: 700px;
+    border: 2px solid rgba(196, 30, 58, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-top: 2rem;
+}
+
+.christmas-banner {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    background: #c41e3a;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: float 3s ease-in-out infinite;
+    white-space: nowrap;
 }
 
 .head h1 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    background: linear-gradient(45deg, #fff, #f0f0f0);
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ffffff, #c41e3a, #ffffff);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: shine 3s linear infinite;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.head p {
-    font-size: 1.2rem;
+.subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
     opacity: 0.9;
-    margin: 8px 0;
 }
 
-.links {
-    display: grid;
-    gap: 20px;
-    width: 100%;
-    padding: 20px;
-}
-
-.links button {
+.proprietor {
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
-    padding: 20px 30px;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.proprietor .label { opacity: 0.8; font-weight: 300; }
+.proprietor .name {
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(196, 30, 58, 0.3);
+    padding-bottom: 2px;
+}
+
+/* Social Links with Christmas Theme */
+.links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 900px;
+    padding: 1rem;
+}
+
+.social-btn {
+    position: relative;
+    padding: 1.5rem;
     border: none;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    background: rgba(196, 30, 58, 0.1);
     backdrop-filter: blur(5px);
     cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border: 2px solid rgba(196, 30, 58, 0.3);
+    animation: borderGlow 3s infinite;
 }
 
-.links button:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.links button::before {
+.social-btn::before {
     content: '';
     position: absolute;
     top: 0;
@@ -120,92 +288,164 @@ img {
         rgba(255, 255, 255, 0.2),
         transparent
     );
-    transition: 0.5s;
+    transition: 0.6s;
 }
 
-.links button:hover::before {
-    left: 100%;
+.social-btn::after {
+    content: '✨';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: sparkle 2s infinite;
 }
 
-.links button i {
+.social-btn:hover::before { left: 100%; }
+.social-btn:hover::after { opacity: 1; }
+
+.social-btn:hover {
+    transform: translateY(-5px);
+    background: rgba(196, 30, 58, 0.2);
+    box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
+}
+
+.icon-wrapper {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(196, 30, 58, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.social-btn:hover .icon-wrapper {
+    transform: rotate(360deg);
+    background: rgba(196, 30, 58, 0.1);
+    border-color: rgba(196, 30, 58, 0.5);
+}
+
+.social-btn i {
     font-size: 2rem;
-    margin-right: 20px;
-    transition: all 0.3s ease;
-    width: 40px;
-    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-.links button:hover i {
-    transform: scale(1.2) rotate(5deg);
-}
-
-.links button span {
-    font-size: 1.2rem;
+.social-btn span {
+    font-size: 1.3rem;
     color: white;
     font-weight: 500;
     letter-spacing: 1px;
-    margin-left: 10px;
 }
 
+.social-btn:hover span {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Christmas-themed Icon Gradients */
+.facebook .icon-wrapper i {
+    background: linear-gradient(45deg, #c41e3a, #1a472a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.instagram .icon-wrapper i {
+    background: linear-gradient(45deg, #c41e3a, #1a472a, #c41e3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.whatsapp .icon-wrapper i {
+    background: linear-gradient(45deg, #1a472a, #c41e3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.telegram .icon-wrapper i {
+    background: linear-gradient(45deg, #c41e3a, #1a472a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gmail .icon-wrapper i {
+    background: linear-gradient(45deg, #c41e3a, #1a472a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact .icon-wrapper i {
+    background: linear-gradient(45deg, #1a472a, #c41e3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Footer Section */
 .end {
     text-align: center;
-    color: white;
-    margin-top: 40px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
+    padding: 2.5rem;
+    background: rgba(196, 30, 58, 0.1);
+    border-radius: 25px;
+    width: 100%;
+    max-width: 700px;
     backdrop-filter: blur(5px);
+    border: 2px solid rgba(196, 30, 58, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .end p {
-    font-size: 1rem;
-    margin: 5px 0;
-    opacity: 0.8;
+    font-size: 1.2rem;
+    margin: 0.7rem 0;
+    opacity: 0.9;
+    font-weight: 300;
 }
 
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    
-    .head h1 {
-        font-size: 2rem;
-    }
-    
-    .head p {
-        font-size: 1rem;
-    }
-    
-    .links button {
-        padding: 15px 20px;
-    }
-    
-    .links button i {
-        font-size: 1.5rem;
-        margin-right: 15px;
-    }
-    
-    .links button span {
-        font-size: 1rem;
-    }
+.memory-name {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+    letter-spacing: 1px;
+    margin: 1rem 0 !important;
+    background: linear-gradient(45deg, #ffffff, #c41e3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
 }
 
-/* Custom colors for social media icons */
-.fa-facebook-messenger { color: #00B2FF !important; }
-.fa-instagram { 
-    background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.christmas-message, .christmas-footer {
+    font-size: 1.2rem;
+    color: #c41e3a;
+    margin-top: 1rem;
+    font-weight: 500;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    animation: float 3s ease-in-out infinite;
 }
-.fa-whatsapp { color: #25D366 !important; }
-.fa-telegram-plane { color: #0088cc !important; }
-.fa-envelope-open-text { 
-    background: linear-gradient(45deg, #DB4437, #F4B400);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.fa-address-book { 
-    background: linear-gradient(45deg, #4CAF50, #2E7D32);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+/* Media Queries */
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    .container { padding: 1rem; gap: 2rem; }
+    .head { padding: 2rem 1rem; }
+    .head h1 { font-size: 2.5rem; }
+    .subtitle { font-size: 1.2rem; }
+    .proprietor { font-size: 1.1rem; }
+    .links { grid-template-columns: 1fr; gap: 1rem; }
+    .social-btn { padding: 1.2rem; }
+    .icon-wrapper { width: 40px; height: 40px; }
+    .social-btn i { font-size: 1.5rem; }
+    .social-btn span { font-size: 1.2rem; }
+    .image-container { padding: 1rem; }
+    .contact-info { padding: 1.5rem; }
+    .contact-info h2 { font-size: 1.3rem; }
+    .contact-item { font-size: 1rem; }
+    .memory-name { font-size: 1.3rem !important; }
+    .christmas-message, .christmas-footer { font-size: 1.1rem; }
+    .snowflake { font-size: 1rem; }
+    .christmas-banner { font-size: 1.2rem; padding: 4px 15px; }
+    .christmas-corner { font-size: 1.5rem; }
+    .social-btn::after { font-size: 0.8rem; top: 3px; right: 3px; }
+    .social-btn:hover { transform: translateY(-3px); }
 }
