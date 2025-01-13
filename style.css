@@ -1,4 +1,22 @@
 /* Core Styles */
+:root {
+    --sankranti-yellow: #FFD700;
+    --sankranti-orange: #FF8C00;
+    --sankranti-deep-orange: #FF4500;
+    --sankranti-sky: #87CEEB;
+    --sankranti-sun: #FDB813;
+    --sankranti-accent: #FF6B6B;
+    --sankranti-text: #333333;
+    --sankranti-border: rgba(255, 140, 0, 0.3);
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0;
+    padding: 0;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,62 +24,22 @@
     transition: transform 0.3s ease-out;
 }
 
-/* Christmas Animations */
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-@keyframes float {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(1deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-}
-
-@keyframes shine {
-    0% { background-position: -100% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
-@keyframes snowfall {
-    0% {
-        transform: translate3d(0, -10vh, 0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translate3d(0, 100vh, 0) rotate(360deg);
-        opacity: 0.3;
-    }
-}
-
-@keyframes sparkle {
-    0% { transform: scale(0) rotate(0deg); opacity: 0; }
-    50% { transform: scale(1) rotate(180deg); opacity: 1; }
-    100% { transform: scale(0) rotate(360deg); opacity: 0; }
-}
-
-@keyframes borderGlow {
-    0% { border-color: rgba(196, 30, 58, 0.3); }
-    50% { border-color: rgba(26, 71, 42, 0.5); }
-    100% { border-color: rgba(196, 30, 58, 0.3); }
-}
-
-/* Base Styles with Christmas Theme */
+/* Base Styles with Sankranti Theme */
 body {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #1a472a 0%, #2d5a27 50%, #1a472a 100%);
+    background: linear-gradient(135deg, var(--sankranti-sky) 0%, #ffffff 50%, var(--sankranti-sky) 100%);
     background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: white;
+    animation: sunriseGradient 15s ease infinite;
+    color: var(--sankranti-text);
     padding: 20px;
     position: relative;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Ensure no horizontal overflow */
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%; /* Ensure container doesn't exceed viewport width */
+    width: 100%;
     margin: 0 auto;
     padding: 1rem;
     display: flex;
@@ -76,8 +54,8 @@ body {
     will-change: transform;
 }
 
-/* Snowfall Effect */
-.snowflakes {
+/* Kite Animation Elements */
+.kites {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -87,20 +65,21 @@ body {
     z-index: 1;
 }
 
-.snowflake {
+.kite {
     position: fixed;
-    color: white;
-    font-size: 1.5em;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-    animation: snowfall linear infinite;
+    font-size: 2em;
+    animation: kiteFloat 10s ease-in-out infinite;
     pointer-events: none;
     will-change: transform;
     transform: translateZ(0);
-    backface-visibility: hidden;
 }
 
-.snowflake:nth-child(2n) { animation-duration: 12s; left: 25%; }
-.snowflake:nth-child(3n) { animation-duration: 15s; left: 75%; }
+.string {
+    position: fixed;
+    font-size: 1.5em;
+    opacity: 0.6;
+    animation: stringWave 8s ease-in-out infinite;
+}
 
 /* Image Container */
 .image-container {
@@ -109,13 +88,13 @@ body {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 20px 50px rgba(255, 140, 0, 0.2);
+    animation: kiteFloat 6s ease-in-out infinite;
     background: white;
     padding: 2rem;
     transform-style: preserve-3d;
     perspective: 1000px;
-    border: 2px solid #c41e3a;
+    border: 2px solid var(--sankranti-orange);
 }
 
 .image-container img {
@@ -124,15 +103,15 @@ body {
     object-fit: contain;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateZ(20px);
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 10px 20px rgba(255, 140, 0, 0.2));
 }
 
-/* Christmas Corners */
-.christmas-corner {
+/* Sankranti Corner Decorations */
+.sankranti-corner {
     position: absolute;
     font-size: 2rem;
     z-index: 2;
-    animation: float 3s ease-in-out infinite;
+    animation: kiteFloat 3s ease-in-out infinite;
 }
 
 .top-left { top: 10px; left: 10px; }
@@ -144,22 +123,20 @@ body {
 .contact-info {
     width: 100%;
     max-width: 600px;
-    background: rgba(196, 30, 58, 0.1);
+    background: rgba(255, 140, 0, 0.1);
     backdrop-filter: blur(5px);
     border-radius: 20px;
     padding: 2rem;
     text-align: center;
-    border: 2px solid rgba(196, 30, 58, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transform: translateZ(0);
-    will-change: transform;
+    border: 2px solid var(--sankranti-border);
+    box-shadow: 0 10px 30px rgba(255, 140, 0, 0.1);
 }
 
 .contact-info h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     letter-spacing: 2px;
-    background: linear-gradient(45deg, #ffffff, #c41e3a);
+    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s linear infinite;
@@ -179,13 +156,14 @@ body {
     font-size: 1.1rem;
     padding: 0.8rem 1.5rem;
     border-radius: 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
-    border: 1px solid rgba(196, 30, 58, 0.3);
+    border: 1px solid var(--sankranti-border);
+    color: var(--sankranti-text);
 }
 
 .contact-item:hover {
-    background: rgba(196, 30, 58, 0.2);
+    background: rgba(255, 140, 0, 0.1);
     transform: translateX(10px);
 }
 
@@ -193,38 +171,36 @@ body {
 .head {
     text-align: center;
     padding: 3rem;
-    background: rgba(196, 30, 58, 0.1);
+    background: rgba(255, 140, 0, 0.1);
     backdrop-filter: blur(5px);
     border-radius: 30px;
     width: 100%;
     max-width: 700px;
-    border: 2px solid rgba(196, 30, 58, 0.3);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--sankranti-border);
+    box-shadow: 0 15px 35px rgba(255, 140, 0, 0.1);
     position: relative;
     margin-top: 2rem;
-    transform: translateZ(0);
-    will-change: transform;
 }
 
-.christmas-banner {
+.sankranti-banner {
     position: absolute;
     top: -25px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.5rem;
-    background: #c41e3a;
+    background: linear-gradient(45deg, var(--sankranti-orange), var(--sankranti-deep-orange));
     color: white;
     padding: 5px 20px;
     border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 4px 10px rgba(255, 140, 0, 0.2);
+    animation: kiteFloat 3s ease-in-out infinite;
     white-space: nowrap;
 }
 
 .head h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, #ffffff, #c41e3a, #ffffff);
+    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -234,42 +210,15 @@ body {
     text-transform: uppercase;
 }
 
-.subtitle {
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-    opacity: 0.9;
-}
-
-.proprietor {
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.proprietor .label { opacity: 0.8; font-weight: 300; }
-.proprietor .name {
-    font-weight: 600;
-    letter-spacing: 1px;
-    border-bottom: 2px solid rgba(196, 30, 58, 0.3);
-    padding-bottom: 2px;
-}
-
-/* Social Links with Christmas Theme */
+/* Social Links */
 .links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.2rem;
-    width: 90%;
+    width: 100%; /* Ensure links take full width */
     max-width: 900px;
     padding: 0.5rem;
     margin: 0.8rem auto;
-    justify-content: center;
-    align-items: center;
-    transform: translateZ(0);
-    will-change: transform;
 }
 
 .social-btn {
@@ -277,18 +226,16 @@ body {
     padding: 1.5rem;
     border: none;
     border-radius: 25px;
-    background: rgba(196, 30, 58, 0.1);
+    background: rgba(255, 140, 0, 0.1);
     backdrop-filter: blur(3px);
     cursor: pointer;
     overflow: hidden;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    border: 2px solid rgba(196, 30, 58, 0.3);
+    border: 2px solid var(--sankranti-border);
     animation: borderGlow 4s infinite;
-    will-change: transform;
-    transform: translateZ(0);
 }
 
 .social-btn::before {
@@ -301,14 +248,14 @@ body {
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(255, 255, 255, 0.2),
+        rgba(255, 140, 0, 0.2),
         transparent
     );
     transition: 0.6s;
 }
 
 .social-btn::after {
-    content: '✨';
+    content: '🪁';
     position: absolute;
     top: 5px;
     right: 5px;
@@ -318,15 +265,16 @@ body {
     animation: sparkle 2s infinite;
 }
 
+.social-btn:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 140, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(255, 140, 0, 0.2);
+}
+
 .social-btn:hover::before { left: 100%; }
 .social-btn:hover::after { opacity: 1; }
 
-.social-btn:hover {
-    transform: translateY(-5px);
-    background: rgba(196, 30, 58, 0.2);
-    box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
-}
-
+/* Icon Styles */
 .icon-wrapper {
     width: 50px;
     height: 50px;
@@ -335,91 +283,41 @@ body {
     justify-content: center;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(196, 30, 58, 0.3);
+    border: 1px solid var(--sankranti-border);
     transition: transform 0.3s ease;
 }
 
 .social-btn:hover .icon-wrapper {
     transform: rotate(360deg);
-    background: rgba(196, 30, 58, 0.1);
-    border-color: rgba(196, 30, 58, 0.5);
+    background: rgba(255, 140, 0, 0.1);
 }
 
 .social-btn i {
     font-size: 2rem;
-    transition: transform 0.3s ease;
+    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .social-btn span {
     font-size: 1.3rem;
-    color: white;
+    color: var(--sankranti-text);
     font-weight: 500;
     letter-spacing: 1px;
-}
-
-.social-btn:hover span {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-/* Christmas-themed Icon Gradients */
-.facebook .icon-wrapper i {
-    background: linear-gradient(45deg, #c41e3a, #1a472a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.instagram .icon-wrapper i {
-    background: linear-gradient(45deg, #c41e3a, #1a472a, #c41e3a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.whatsapp .icon-wrapper i {
-    background: linear-gradient(45deg, #1a472a, #c41e3a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.telegram .icon-wrapper i {
-    background: linear-gradient(45deg, #c41e3a, #1a472a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.gmail .icon-wrapper i {
-    background: linear-gradient(45deg, #c41e3a, #1a472a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.contact .icon-wrapper i {
-    background: linear-gradient(45deg, #1a472a, #c41e3a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 /* Footer Section */
 .end {
     text-align: center;
     padding: 2.5rem;
-    background: rgba(196, 30, 58, 0.1);
+    background: rgba(255, 140, 0, 0.1);
     border-radius: 25px;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     backdrop-filter: blur(3px);
-    border: 2px solid rgba(196, 30, 58, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    position: relative;
+    border: 2px solid var(--sankranti-border);
+    box-shadow: 0 10px 30px rgba(255, 140, 0, 0.1);
     margin: 2rem auto;
-    transform: translateZ(0);
-    will-change: transform;
-}
-
-.end p {
-    font-size: 1.2rem;
-    margin: 0.7rem 0;
-    opacity: 0.9;
-    font-weight: 300;
 }
 
 .memory-name {
@@ -428,121 +326,88 @@ body {
     opacity: 1 !important;
     letter-spacing: 1px;
     margin: 1rem 0 !important;
-    background: linear-gradient(45deg, #ffffff, #c41e3a);
+    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s linear infinite;
 }
 
-.christmas-message, .christmas-footer {
+.sankranti-message, .sankranti-footer {
     font-size: 1.2rem;
-    color: #c41e3a;
+    color: var(--sankranti-deep-orange);
     margin-top: 1rem;
     font-weight: 500;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    animation: float 3s ease-in-out infinite;
+    text-shadow: 0 0 5px rgba(255, 140, 0, 0.3);
+    animation: kiteFloat 3s ease-in-out infinite;
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
-    body { 
-        padding: 10px 0; 
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
+    body {
+        padding: 10px;
     }
-    .container { 
-        padding: 1rem 10px; 
-        gap: 2rem;
-        width: 100%;
-        max-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+    .container {
+        padding: 1rem 10px;
     }
-    .head { 
+
+    .head {
         padding: 2rem 1rem;
-        width: 90%;
-        margin: 0 auto;
-        max-width: 500px;
     }
-    .head h1 { 
-        font-size: 2rem;
-        word-wrap: break-word;
+
+    .head h1 {
+        font-size: 2.5rem;
     }
-    .subtitle { font-size: 1.1rem; }
-    .proprietor { 
-        font-size: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
+
+    .sankranti-banner {
+        font-size: 1.2rem;
     }
-    .links { 
+
+    .links {
         grid-template-columns: 1fr;
-        gap: 1rem;
-        width: 90%;
-        margin: 0.5rem auto;
-        max-width: 500px;
-        place-items: center;
     }
-    .social-btn { 
-        padding: 0.8rem;
-        width: 100%;
-        justify-content: center;
-        margin: 0 auto;
-        max-width: 450px;
+
+    .social-btn {
+        padding: 1rem;
     }
-    .icon-wrapper { 
-        width: 35px; 
-        height: 35px;
+
+    .icon-wrapper {
+        width: 40px;
+        height: 40px;
     }
-    .social-btn i { font-size: 1.3rem; }
-    .social-btn span { font-size: 1.1rem; }
-    .image-container { 
-        padding: 0.8rem;
-        width: 90%;
-        margin: 0 auto;
-        max-width: 500px;
+
+    .social-btn i {
+        font-size: 1.5rem;
     }
-    .contact-info { 
-        padding: 1.2rem;
-        width: 90%;
-        margin: 0 auto;
-        max-width: 500px;
+
+    .social-btn span {
+        font-size: 1.1rem;
     }
-    .contact-info h2 { font-size: 1.2rem; }
-    .contact-item { 
-        font-size: 0.9rem;
-        padding: 0.6rem 1rem;
-    }
-    .memory-name { font-size: 1.2rem !important; }
-    .christmas-message, .christmas-footer { font-size: 1rem; }
-    .snowflake { font-size: 0.8rem; }
-    .christmas-banner { 
-        font-size: 1.1rem; 
-        padding: 4px 12px;
-        width: auto;
-        max-width: 90%;
-    }
-    .christmas-corner { font-size: 1.3rem; }
-    .social-btn::after { 
-        font-size: 0.7rem; 
-        top: 3px; 
-        right: 3px;
-    }
-    .social-btn:hover { transform: translateY(-2px); }
 }
 
 @media (max-width: 480px) {
-    .head h1 { font-size: 1.8rem; }
-    .subtitle { font-size: 1rem; }
-    .contact-item { flex-direction: column; gap: 0.5rem; }
-    .social-btn { padding: 0.8rem; }
-    .icon-wrapper { 
-        width: 30px;
-        height: 30px;
+    .head h1 {
+        font-size: 2rem;
     }
-    .social-btn span { font-size: 1rem; }
+
+    .sankranti-banner {
+        font-size: 1rem;
+    }
+
+    .social-btn {
+        padding: 0.8rem;
+    }
+
+    .icon-wrapper {
+        width: 35px;
+        height: 35px;
+    }
+
+    .social-btn i {
+        font-size: 1.3rem;
+    }
+
+    .social-btn span {
+        font-size: 1rem;
+    }
 }
