@@ -1,44 +1,69 @@
-/* Core Styles */
+/* Core Styles with Dance Crew Theme */
 :root {
-    --sankranti-yellow: #FFD700;
-    --sankranti-orange: #FF8C00;
-    --sankranti-deep-orange: #FF4500;
-    --sankranti-sky: #87CEEB;
-    --sankranti-sun: #FDB813;
-    --sankranti-accent: #FF6B6B;
-    --sankranti-text: #333333;
-    --sankranti-border: rgba(255, 140, 0, 0.3);
+    --primary: #ff2a6d;
+    --primary-light: #ff619b;
+    --primary-dark: #d10045;
+    --secondary: #05d9e8;
+    --secondary-dark: #038e99;
+    --accent: #ffdc3c;
+    --dark: #1a1a2e;
+    --darker: #0f0f1a;
+    --light: #ffffff;
+    --background: #121212;
+    --surface: #1f1f1f;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(0, 0, 0, 0.3);
+    --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --gradient-alt: linear-gradient(45deg, var(--secondary) 0%, var(--accent) 100%);
 }
 
 html, body {
     width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: transform 0.3s ease-out;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Base Styles with Sankranti Theme */
+/* Base Styles with Dance Theme */
 body {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--sankranti-sky) 0%, #ffffff 50%, var(--sankranti-sky) 100%);
-    background-size: 400% 400%;
-    animation: sunriseGradient 15s ease infinite;
-    color: var(--sankranti-text);
+    background: var(--background);
+    color: var(--text-primary);
     padding: 20px;
     position: relative;
-    overflow-x: hidden; /* Ensure no horizontal overflow */
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.1) 0%, rgba(5, 217, 232, 0.1) 90%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at top right, rgba(255, 42, 109, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at bottom left, rgba(5, 217, 232, 0.2) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .container {
-    max-width: 100%; /* Ensure container doesn't exceed viewport width */
+    max-width: 100%;
     width: 100%;
     margin: 0 auto;
     padding: 1rem;
@@ -46,100 +71,148 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
     position: relative;
     z-index: 2;
     min-height: 100vh;
-    transform: translateZ(0);
-    will-change: transform;
 }
 
-/* Kite Animation Elements */
-.kites {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.kite {
-    position: fixed;
-    font-size: 2em;
-    animation: kiteFloat 10s ease-in-out infinite;
-    pointer-events: none;
-    will-change: transform;
-    transform: translateZ(0);
-}
-
-.string {
-    position: fixed;
-    font-size: 1.5em;
-    opacity: 0.6;
-    animation: stringWave 8s ease-in-out infinite;
-}
-
-/* Image Container */
+/* Image Container with Dance Crew Style */
 .image-container {
     width: 100%;
     max-width: 600px;
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(255, 140, 0, 0.2);
-    animation: kiteFloat 6s ease-in-out infinite;
-    background: white;
-    padding: 2rem;
+    box-shadow: 
+        0 15px 35px var(--shadow),
+        0 0 0 2px var(--primary),
+        0 0 20px rgba(255, 42, 109, 0.3);
+    background: var(--surface);
+    padding: 0;
     transform-style: preserve-3d;
     perspective: 1000px;
-    border: 2px solid var(--sankranti-orange);
+    border: 2px solid var(--primary);
+}
+
+.image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    opacity: 0.2;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+.image-container::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    transform: rotate(45deg);
+    z-index: 2;
+    pointer-events: none;
+    animation: shine-effect 6s infinite;
+}
+
+@keyframes shine-effect {
+    0% {
+        top: -100%;
+        left: -100%;
+    }
+    100% {
+        top: 100%;
+        left: 100%;
+    }
 }
 
 .image-container img {
     width: 100%;
     height: auto;
-    object-fit: contain;
+    object-fit: cover;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateZ(20px);
-    filter: drop-shadow(0 10px 20px rgba(255, 140, 0, 0.2));
+    transform: translateZ(10px);
+    filter: contrast(1.1) saturate(1.2);
+    display: block;
 }
 
-/* Sankranti Corner Decorations */
-.sankranti-corner {
-    position: absolute;
-    font-size: 2rem;
-    z-index: 2;
-    animation: kiteFloat 3s ease-in-out infinite;
-}
-
-.top-left { top: 10px; left: 10px; }
-.top-right { top: 10px; right: 10px; animation-delay: 0.5s; }
-.bottom-left { bottom: 10px; left: 10px; animation-delay: 1s; }
-.bottom-right { bottom: 10px; right: 10px; animation-delay: 1.5s; }
-
-/* Contact Info */
+/* Contact Info with Dance Style */
 .contact-info {
     width: 100%;
     max-width: 600px;
-    background: rgba(255, 140, 0, 0.1);
-    backdrop-filter: blur(5px);
+    background: var(--surface);
     border-radius: 20px;
     padding: 2rem;
     text-align: center;
-    border: 2px solid var(--sankranti-border);
-    box-shadow: 0 10px 30px rgba(255, 140, 0, 0.1);
+    border: 2px solid var(--secondary);
+    box-shadow: 
+        0 15px 35px var(--shadow),
+        0 0 20px rgba(5, 217, 232, 0.3);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 42, 109, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        top: -50%;
+        left: -50%;
+    }
+    100% {
+        top: 150%;
+        left: 150%;
+    }
 }
 
 .contact-info h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
     letter-spacing: 2px;
-    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
+    color: var(--secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 0 10px rgba(5, 217, 232, 0.5);
+}
+
+.contact-info h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 3px;
+    box-shadow: 0 0 10px var(--primary);
 }
 
 .contact-details {
@@ -155,67 +228,141 @@ body {
     gap: 1rem;
     font-size: 1.1rem;
     padding: 0.8rem 1.5rem;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    border: 1px solid var(--sankranti-border);
-    color: var(--sankranti-text);
+    border-radius: 50px;
+    background: var(--dark);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: all 0.5s ease;
+}
+
+.contact-item:hover::before {
+    left: 100%;
 }
 
 .contact-item:hover {
-    background: rgba(255, 140, 0, 0.1);
-    transform: translateX(10px);
+    background: var(--primary);
+    transform: translateX(10px) scale(1.03);
+    color: var(--light);
+    box-shadow: 
+        0 5px 15px rgba(255, 42, 109, 0.4),
+        inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Header Section */
+.contact-item i {
+    color: var(--secondary);
+    font-size: 1.3rem;
+    filter: drop-shadow(0 0 5px rgba(5, 217, 232, 0.5));
+}
+
+.contact-item:hover i {
+    color: var(--light);
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+/* Header Section with Dance Style */
 .head {
     text-align: center;
-    padding: 3rem;
-    background: rgba(255, 140, 0, 0.1);
-    backdrop-filter: blur(5px);
-    border-radius: 30px;
+    padding: 3rem 2rem;
+    background: var(--surface);
+    border-radius: 20px;
     width: 100%;
     max-width: 700px;
-    border: 2px solid var(--sankranti-border);
-    box-shadow: 0 15px 35px rgba(255, 140, 0, 0.1);
+    border: 2px solid var(--primary);
+    box-shadow: 
+        0 15px 35px var(--shadow),
+        0 0 20px rgba(255, 42, 109, 0.3);
     position: relative;
-    margin-top: 2rem;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, var(--surface), rgba(31, 31, 31, 0.9));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.sankranti-banner {
+.head::before {
+    content: '';
     position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    background: linear-gradient(45deg, var(--sankranti-orange), var(--sankranti-deep-orange));
-    color: white;
-    padding: 5px 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(255, 140, 0, 0.2);
-    animation: kiteFloat 3s ease-in-out infinite;
-    white-space: nowrap;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--gradient);
+    box-shadow: 0 0 20px var(--primary);
 }
 
 .head h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
-    background-size: 200% auto;
+    background: var(--gradient);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
-    font-weight: 700;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: inline-block;
+    filter: drop-shadow(0 0 8px rgba(255, 42, 109, 0.4));
 }
 
-/* Social Links */
+.subtitle {
+    font-size: 1.4rem;
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(5, 217, 232, 0.5);
+}
+
+.proprietor {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    width: 80%;
+    margin: 1.5rem auto 0;
+    position: relative;
+}
+
+.proprietor::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 1px;
+    background: var(--gradient);
+}
+
+.proprietor .name {
+    font-weight: 600;
+    color: var(--primary-light);
+    text-shadow: 0 0 5px rgba(255, 42, 109, 0.3);
+}
+
+/* Social Links with Dance Style */
 .links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.2rem;
-    width: 100%; /* Ensure links take full width */
+    gap: 1.5rem;
+    width: 100%;
     max-width: 900px;
     padding: 0.5rem;
     margin: 0.8rem auto;
@@ -225,120 +372,153 @@ body {
     position: relative;
     padding: 1.5rem;
     border: none;
-    border-radius: 25px;
-    background: rgba(255, 140, 0, 0.1);
-    backdrop-filter: blur(3px);
+    border-radius: 16px;
+    background: var(--surface);
     cursor: pointer;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    border: 2px solid var(--sankranti-border);
-    animation: borderGlow 4s infinite;
+    border: 2px solid var(--border);
+    box-shadow: 0 8px 20px var(--shadow);
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .social-btn::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 140, 0, 0.2),
-        transparent
-    );
-    transition: 0.6s;
+    background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
 }
 
-.social-btn::after {
-    content: '🪁';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 1rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    animation: sparkle 2s infinite;
+.social-btn:hover::before {
+    opacity: 1;
 }
 
 .social-btn:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 140, 0, 0.2);
-    box-shadow: 0 10px 20px rgba(255, 140, 0, 0.2);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 15px 30px rgba(255, 42, 109, 0.3),
+        0 0 20px rgba(255, 42, 109, 0.2);
+    border-color: var(--primary);
 }
 
-.social-btn:hover::before { left: 100%; }
-.social-btn:hover::after { opacity: 1; }
-
-/* Icon Styles */
+/* Icon Styles with Dance Theme */
 .icon-wrapper {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--sankranti-border);
-    transition: transform 0.3s ease;
+    border-radius: 50%;
+    background: var(--dark);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.icon-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.social-btn:hover .icon-wrapper::after {
+    opacity: 1;
 }
 
 .social-btn:hover .icon-wrapper {
-    transform: rotate(360deg);
-    background: rgba(255, 140, 0, 0.1);
+    transform: scale(1.1) rotate(10deg);
+    border-color: var(--light);
+    box-shadow: 0 0 15px rgba(255, 42, 109, 0.5);
 }
 
 .social-btn i {
     font-size: 2rem;
-    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary);
+    transition: all 0.4s ease;
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 0 5px rgba(255, 42, 109, 0.3));
+}
+
+.social-btn:hover i {
+    color: var(--light);
+    transform: scale(1.2) rotate(-5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
 }
 
 .social-btn span {
     font-size: 1.3rem;
-    color: var(--sankranti-text);
-    font-weight: 500;
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: color 0.4s ease;
     letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Footer Section */
+.social-btn:hover span {
+    color: var(--light);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Footer Section with Dance Style */
 .end {
     text-align: center;
     padding: 2.5rem;
-    background: rgba(255, 140, 0, 0.1);
-    border-radius: 25px;
+    background: var(--surface);
+    border-radius: 20px;
     width: 100%;
     max-width: 500px;
-    backdrop-filter: blur(3px);
-    border: 2px solid var(--sankranti-border);
-    box-shadow: 0 10px 30px rgba(255, 140, 0, 0.1);
+    border: 2px solid var(--secondary);
+    box-shadow: 
+        0 15px 35px var(--shadow),
+        0 0 20px rgba(5, 217, 232, 0.3);
     margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.end::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(5, 217, 232, 0.1) 0%, transparent 70%);
 }
 
 .memory-name {
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    opacity: 1 !important;
-    letter-spacing: 1px;
-    margin: 1rem 0 !important;
-    background: linear-gradient(45deg, var(--sankranti-deep-orange), var(--sankranti-yellow));
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    background: var(--gradient);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
-}
-
-.sankranti-message, .sankranti-footer {
-    font-size: 1.2rem;
-    color: var(--sankranti-deep-orange);
-    margin-top: 1rem;
-    font-weight: 500;
-    text-shadow: 0 0 5px rgba(255, 140, 0, 0.3);
-    animation: kiteFloat 3s ease-in-out infinite;
+    background-clip: text;
+    color: transparent !important;
+    letter-spacing: 2px;
+    margin: 1.5rem 0 !important;
+    text-transform: uppercase;
+    filter: drop-shadow(0 0 8px rgba(255, 42, 109, 0.4));
 }
 
 /* Media Queries */
@@ -359,12 +539,31 @@ body {
         font-size: 2.5rem;
     }
 
-    .sankranti-banner {
-        font-size: 1.2rem;
-    }
-
     .links {
         grid-template-columns: 1fr;
+    }
+
+    .social-btn {
+        padding: 1.2rem;
+    }
+
+    .icon-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .social-btn i {
+        font-size: 1.7rem;
+    }
+
+    .social-btn span {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .head h1 {
+        font-size: 2rem;
     }
 
     .social-btn {
@@ -372,8 +571,8 @@ body {
     }
 
     .icon-wrapper {
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
     }
 
     .social-btn i {
@@ -385,29 +584,184 @@ body {
     }
 }
 
-@media (max-width: 480px) {
-    .head h1 {
-        font-size: 2rem;
+/* Dance-specific animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
     }
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
 
-    .sankranti-banner {
-        font-size: 1rem;
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        box-shadow: 
+            0 15px 35px var(--shadow),
+            0 0 0 2px var(--primary),
+            0 0 20px rgba(255, 42, 109, 0.3);
     }
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+        box-shadow: 
+            0 25px 45px var(--shadow),
+            0 0 0 2px var(--primary),
+            0 0 30px rgba(255, 42, 109, 0.4);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+        box-shadow: 
+            0 15px 35px var(--shadow),
+            0 0 0 2px var(--primary),
+            0 0 20px rgba(255, 42, 109, 0.3);
+    }
+}
 
-    .social-btn {
-        padding: 0.8rem;
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 42, 109, 0.3), 0 0 10px rgba(5, 217, 232, 0.3);
     }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 42, 109, 0.6), 0 0 30px rgba(5, 217, 232, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 42, 109, 0.3), 0 0 10px rgba(5, 217, 232, 0.3);
+    }
+}
 
-    .icon-wrapper {
-        width: 35px;
-        height: 35px;
-    }
+.head h1 {
+    animation: pulse 3s infinite;
+}
 
-    .social-btn i {
-        font-size: 1.3rem;
-    }
+.image-container {
+    animation: float 6s ease-in-out infinite;
+}
 
-    .social-btn span {
-        font-size: 1rem;
+/* Ripple effect */
+.social-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
     }
+}
+
+/* Advanced hover effects */
+.social-btn:hover .ripple {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
+/* Advanced hover and focus effects for better accessibility */
+.social-btn:focus, .contact-item:focus {
+    outline: none;
+    box-shadow: 
+        0 0 0 2px var(--primary),
+        0 0 0 4px rgba(255, 42, 109, 0.3),
+        0 8px 20px var(--shadow);
+}
+
+/* Advanced 3D effects */
+.social-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Beat animation for icons on hover */
+@keyframes beat {
+    0% {
+        transform: scale(1);
+    }
+    15% {
+        transform: scale(1.15);
+    }
+    30% {
+        transform: scale(1);
+    }
+    45% {
+        transform: scale(1.15);
+    }
+    60% {
+        transform: scale(1);
+    }
+}
+
+.social-btn:hover i {
+    animation: beat 1s infinite;
+}
+
+/* Enhanced background patterns */
+.head, .contact-info, .end {
+    background-image: 
+        linear-gradient(to bottom, var(--surface), rgba(31, 31, 31, 0.9)),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Neon text effect for special elements */
+.subtitle {
+    text-shadow: 
+        0 0 5px var(--secondary),
+        0 0 10px var(--secondary),
+        0 0 20px var(--secondary-dark);
+}
+
+/* Enhanced image hover effect */
+.image-container:hover img {
+    transform: translateZ(20px) scale(1.05);
+    filter: contrast(1.2) saturate(1.3) brightness(1.1);
+}
+
+/* Clip path animations for buttons on hover */
+.social-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.social-btn:hover::after {
+    opacity: 1;
 }
