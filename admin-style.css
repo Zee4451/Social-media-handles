@@ -508,6 +508,63 @@ body {
     border-color: var(--warning);
 }
 
+/* File Upload Styles */
+.file-input {
+    padding: 10px;
+    background: var(--darker);
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.file-input:hover {
+    border-color: var(--primary);
+}
+
+.file-input::-webkit-file-upload-button {
+    background: var(--primary);
+    color: var(--light);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: background 0.3s ease;
+}
+
+.file-input::-webkit-file-upload-button:hover {
+    background: var(--primary-light);
+}
+
+.upload-progress {
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--darker);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+#progress-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .admin-container {

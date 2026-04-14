@@ -7,7 +7,7 @@
  * @module admin
  */
 
-import { initializeFirebase, GalleryCRUD, SocialLinksCRUD, ContactCRUD } from './firebase-config.js';
+import { initializeFirebase, GalleryCRUD, SocialLinksCRUD, ContactCRUD, uploadFile } from './firebase-config.js';
 
 // Global state
 let firebaseApp = null;
@@ -244,6 +244,59 @@ galleryModal.addEventListener('click', (e) => {
 mediaTypeSelect.addEventListener('change', () => {
     posterGroup.style.display = mediaTypeSelect.value === 'video' ? 'flex' : 'none';
 });
+
+// File upload handling
+const mediaFileInput = document.getElementById('media-file');
+const uploadProgress = document.getElementById('upload-progress');
+const progressFill = document.getElementById('progress-fill');
+const progressText = document.getElementById('progress-text');
+let uploadedFileURL = null;
+
+if (mediaFileInput) {
+    mediaFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // Validate file size (50MB max)
+        const maxSize = 50 * 1024 * 1024; // 50MB
+        if (file.size > maxSize) {
+            showToast('File too large. Maximum size is 50MB', 'error');
+            mediaFileInput.value = '';
+            return;
+        }
+        
+        // Show progress bar
+        uploadProgress.style.display = 'block';
+        progressFill.style.width = '0%';
+        progressText.textContent = 'Uploading... 0%';
+        
+        try {
+            // Determine folder based on file type
+            const folder = file.type.startsWith('video/') ? 'videos' : 'gallery';
+            
+            // Upload file
+            uploadedFileURL = await uploadFile(file, folder);
+            
+            // Update progress to 100%
+            progressFill.style.width = '100%';
+            progressText.textContent = 'Upload complete!';
+            
+            // Auto-fill the URL field
+            document.getElementById('media-src').value = uploadedFileURL;
+            
+            showToast('File uploaded successfully!', 'success');
+            
+            // Hide progress after 2 seconds
+            setTimeout(() => {
+                uploadProgress.style.display = 'none';
+            }, 2000);
+        } catch (error) {
+            console.error('Upload error:', error);
+            showToast('Failed to upload file: ' + error.message, 'error');
+            uploadProgress.style.display = 'none';
+        }
+    });
+}
 
 function openGalleryModal(item = null) {
     galleryForm.reset();

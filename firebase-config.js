@@ -24,6 +24,46 @@ export const firebaseConfig = {
 export const isFirebaseConfigured = true;
 
 /**
+ * Upload file to Firebase Storage
+ * 
+ * @async
+ * @function uploadFile
+ * @param {Object} storage - Firebase storage instance
+ * @param {File} file - File to upload
+ * @param {string} folder - Folder name (gallery, videos, posters)
+ * @returns {Promise<string>} Download URL of uploaded file
+ */
+export async function uploadFile(file, folder = 'gallery') {
+    try {
+        const { ref, uploadBytes, getDownloadURL } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js');
+        const { getStorage } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js');
+        
+        const storage = getStorage();
+        
+        // Create unique filename
+        const timestamp = Date.now();
+        const randomId = Math.random().toString(36).substring(7);
+        const extension = file.name.split('.').pop();
+        const filename = `${folder}/${timestamp}_${randomId}.${extension}`;
+        
+        // Create storage reference
+        const storageRef = ref(storage, filename);
+        
+        // Upload file
+        const snapshot = await uploadBytes(storageRef, file);
+        
+        // Get download URL
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        
+        console.log('File uploaded successfully:', downloadURL);
+        return downloadURL;
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        throw error;
+    }
+}
+
+/**
  * Initialize Firebase and return database instance
  * 
  * @async
