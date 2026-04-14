@@ -1,18 +1,16 @@
-# Firebase Config - NOW ALLOWED (needed for live site)
-# firebase-config.js
-
-# Template file (backup)
+# Firebase Config Template (backup only)
 firebase-config.template.js
 
-# Documentation Files (Internal Use Only)
-# *.md (commented out to allow NETLIFY_DEPLOY.md)
-PROJECT_MEMORY.md
-FIREBASE_SETUP.md
-README.md
-
-# Netlify Files (NEVER ignore these - needed for deployment)
-# netlify.toml
-# _redirects
+# Internal Documentation (not for public repository)
+CLOUDINARY_*.md
+FIREBASE_STORAGE_*.md
+FIREBASE_CORS_FIX.md
+FIREBASE_ALTERNATIVES.md
+CORS_FIX_STEPS.md
+ENABLE_STORAGE_VISUAL_GUIDE.md
+HOW_TO_START_STORAGE_PRODUCTION_MODE.md
+DEPLOY_QUICK_REFERENCE.md
+REPOSITORY_CLEANUP_GUIDE.md
 
 # Development & Placeholder Files
 generate-placeholders.html
