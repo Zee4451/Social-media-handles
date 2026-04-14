@@ -7,12 +7,13 @@
  * @module cloudinary-config
  */
 
-// Cloudinary Configuration
+// Cloudinary Configuration - REPLACE WITH YOUR CREDENTIALS
+// Get this from: Cloudinary Dashboard → Account Details
 export const cloudinaryConfig = {
-    cloudName: 'dzb4klhd8',
-    apiKey: '322962445971584',
-    apiSecret: 'iHCI5HEaJ-TJ3D5zQnZtkhJdNII', // Note: Keep this secure!
-    uploadPreset: 'sfactor_gallery' // We'll create this
+    cloudName: 'YOUR_CLOUD_NAME',
+    apiKey: 'YOUR_API_KEY',
+    apiSecret: 'YOUR_API_SECRET', // Keep this secure!
+    uploadPreset: 'YOUR_UPLOAD_PRESET'
 };
 
 /**
@@ -24,9 +25,6 @@ export const cloudinaryConfig = {
  * @param {string} folder - Folder name (gallery, videos, posters)
  * @param {function} onProgress - Progress callback (optional)
  * @returns {Promise<string>} Secure URL of uploaded file
- * 
- * @example
- * const url = await uploadToCloudinary(file, 'gallery');
  */
 export async function uploadToCloudinary(file, folder = 'gallery', onProgress = null) {
     try {
@@ -91,9 +89,6 @@ export async function uploadToCloudinary(file, folder = 'gallery', onProgress = 
  * @param {string} publicId - Cloudinary public ID
  * @param {Object} transformations - Transformation options
  * @returns {string} Transformed image URL
- * 
- * @example
- * const url = getTransformedImageURL('gallery/photo', { width: 800, quality: 'auto' });
  */
 export function getTransformedImageURL(publicId, transformations = {}) {
     const baseURL = `https://res.cloudinary.com/${cloudinaryConfig.cloudName}/image/upload/`;
