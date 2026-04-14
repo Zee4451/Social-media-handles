@@ -1,6 +1,9 @@
 # Firebase Credentials & Config
 firebase-config.js
 
+# Allow template file
+!firebase-config.template.js
+
 # Documentation Files (Internal Use Only)
 *.md
 PROJECT_MEMORY.md
