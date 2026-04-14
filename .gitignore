@@ -5,10 +5,14 @@
 firebase-config.template.js
 
 # Documentation Files (Internal Use Only)
-*.md
+# *.md (commented out to allow NETLIFY_DEPLOY.md)
 PROJECT_MEMORY.md
 FIREBASE_SETUP.md
 README.md
+
+# Netlify Files (NEVER ignore these - needed for deployment)
+# netlify.toml
+# _redirects
 
 # Development & Placeholder Files
 generate-placeholders.html

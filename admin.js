@@ -7,7 +7,8 @@
  * @module admin
  */
 
-import { initializeFirebase, GalleryCRUD, SocialLinksCRUD, ContactCRUD, uploadFile } from './firebase-config.js';
+import { initializeFirebase, GalleryCRUD, SocialLinksCRUD, ContactCRUD } from './firebase-config.js';
+import { uploadToCloudinary, validateFile, getFileType } from './cloudinary-config.js';
 
 // Global state
 let firebaseApp = null;
@@ -271,11 +272,12 @@ if (mediaFileInput) {
         progressText.textContent = 'Uploading... 0%';
         
         try {
-            // Determine folder based on file type
+            // Upload file to Cloudinary
             const folder = file.type.startsWith('video/') ? 'videos' : 'gallery';
-            
-            // Upload file
-            uploadedFileURL = await uploadFile(file, folder);
+            uploadedFileURL = await uploadToCloudinary(file, folder, (progress) => {
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `Uploading... ${progress}%`;
+            });
             
             // Update progress to 100%
             progressFill.style.width = '100%';
