@@ -1,0 +1,3 @@
+# Netlify Redirects
+# Redirect /login to admin.html for clean URL
+/login    /admin.html    200

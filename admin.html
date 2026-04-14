@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Panel - S. Factor Dance Crew</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-lock"></i>
+                <h1>Admin Login</h1>
+                <p>S. Factor Dance Crew</p>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </label>
+                    <input type="email" id="email" placeholder="admin@sfactor.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-key"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="admin-container" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-user-shield"></i> Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-section="gallery">
+                    <i class="fas fa-images"></i>
+                    <span>Gallery</span>
+                </button>
+                <button class="nav-btn" data-section="social">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Social Links</span>
+                </button>
+                <button class="nav-btn" data-section="contact">
+                    <i class="fas fa-address-card"></i>
+                    <span>Contact Info</span>
+                </button>
+                <button class="nav-btn" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </button>
+                <button id="logout-btn" class="nav-btn logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Gallery Management -->
+            <section id="gallery-section" class="content-section active">
+                <div class="section-header">
+                    <h1><i class="fas fa-images"></i> Gallery Management</h1>
+                    <button id="add-gallery-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Add New Item
+                    </button>
+                </div>
+
+                <!-- Add/Edit Gallery Modal -->
+                <div id="gallery-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="modal-title">Add Gallery Item</h2>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <form id="gallery-form" class="modal-form">
+                            <input type="hidden" id="gallery-item-key">
+                            
+                            <div class="form-group">
+                                <label for="media-type">Media Type</label>
+                                <select id="media-type" required>
+                                    <option value="image">Image</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="media-src">Media URL</label>
+                                <input type="text" id="media-src" placeholder="./gallery/photo.jpg or https://..." required>
+                                <small>For local files: ./gallery/filename.jpg or ./videos/filename.mp4</small>
+                            </div>
+
+                            <div class="form-group" id="poster-group" style="display: none;">
+                                <label for="media-poster">Video Poster URL</label>
+                                <input type="text" id="media-poster" placeholder="./videos/poster.jpg">
+                                <small>Thumbnail shown before video plays</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="media-title">Title</label>
+                                <input type="text" id="media-title" placeholder="Performance Title" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="media-description">Description</label>
+                                <input type="text" id="media-description" placeholder="Event description">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    Save Item
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Gallery Items List -->
+                <div id="gallery-list" class="items-grid">
+                    <!-- Items will be loaded here dynamically -->
+                </div>
+            </section>
+
+            <!-- Social Links Management -->
+            <section id="social-section" class="content-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-share-alt"></i> Social Media Links</h1>
+                </div>
+
+                <form id="social-form" class="settings-form">
+                    <div class="form-group">
+                        <label for="facebook-url">
+                            <i class="fab fa-facebook"></i>
+                            Facebook URL
+                        </label>
+                        <input type="url" id="facebook-url" placeholder="https://facebook.com/yourpage">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instagram-url">
+                            <i class="fab fa-instagram"></i>
+                            Instagram URL
+                        </label>
+                        <input type="url" id="instagram-url" placeholder="https://instagram.com/yourprofile">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="whatsapp-url">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp Link
+                        </label>
+                        <input type="url" id="whatsapp-url" placeholder="https://wa.link/yourlink">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telegram-url">
+                            <i class="fab fa-telegram"></i>
+                            Telegram URL
+                        </label>
+                        <input type="url" id="telegram-url" placeholder="https://t.me/yourchannel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-tel">
+                            <i class="fas fa-phone"></i>
+                            Contact (Phone)
+                        </label>
+                        <input type="text" id="contact-tel" placeholder="tel:9340073167">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gmail-mailto">
+                            <i class="fas fa-envelope"></i>
+                            Gmail (Email)
+                        </label>
+                        <input type="text" id="gmail-mailto" placeholder="mailto:email@example.com">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Save All Links
+                    </button>
+                </form>
+            </section>
+
+            <!-- Contact Information Management -->
+            <section id="contact-section" class="content-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-address-card"></i> Contact Information</h1>
+                </div>
+
+                <form id="contact-form" class="settings-form">
+                    <div class="form-group">
+                        <label for="contact-phone">
+                            <i class="fas fa-phone-alt"></i>
+                            Phone Number
+                        </label>
+                        <input type="text" id="contact-phone" placeholder="9340073167">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input type="email" id="contact-email" placeholder="sfactorperformingart@gmail.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-director">
+                            <i class="fas fa-user-tie"></i>
+                            Director Name
+                        </label>
+                        <input type="text" id="contact-director" placeholder="MAK-E">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Update Contact Info
+                    </button>
+                </form>
+            </section>
+
+            <!-- Settings -->
+            <section id="settings-section" class="content-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-cog"></i> Settings</h1>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-database"></i> Database Status</h3>
+                    <div class="status-indicator">
+                        <span id="db-status" class="status-dot"></span>
+                        <span id="db-status-text">Connecting...</span>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-info-circle"></i> Information</h3>
+                    <p>All changes are saved to Firebase in real-time.</p>
+                    <p>Changes will appear on the main website immediately.</p>
+                    <p>Make sure to use correct file paths for local media.</p>
+                </div>
+
+                <div class="settings-card warning">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Important</h3>
+                    <p>Keep your Firebase credentials secure. Never share them publicly.</p>
+                    <p>Regularly backup your database from Firebase Console.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

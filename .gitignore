@@ -1,0 +1,36 @@
+# Firebase Credentials & Config
+firebase-config.js
+
+# Documentation Files (Internal Use Only)
+*.md
+PROJECT_MEMORY.md
+FIREBASE_SETUP.md
+README.md
+
+# Development & Placeholder Files
+generate-placeholders.html
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
