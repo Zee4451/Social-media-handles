@@ -1,10 +1,6 @@
-# Credential Files (NEVER commit these - keep secure!)
+# Credential Files (NEVER commit - personal project)
 firebase-config.js
 cloudinary-config.js
-
-# Template files (safe to commit - no credentials)
-# firebase-config.template.js
-# cloudinary-config.template.js
 
 # Internal Documentation (not for public repository)
 CLOUDINARY_*.md
