@@ -1595,6 +1595,7 @@ const Lightbox = {
         if (!this.modal) return;
         
         // Collect all gallery items (photos and videos)
+        this.images = []; // Reset array
         document.querySelectorAll('.gallery-item').forEach((item, index) => {
             const isVideo = item.classList.contains('video-item');
             
@@ -1618,6 +1619,8 @@ const Lightbox = {
                 });
             }
         });
+        
+        console.log('🖼️ Lightbox initialized with', this.images.length, 'items:', this.images);
         
         this.bindEvents();
     },
@@ -1700,8 +1703,19 @@ const Lightbox = {
             this.image.style.display = 'block';
             
             // Update image source
-            this.image.src = media.src;
-            this.image.alt = media.alt;
+            // Create a new Image object to preload
+            const img = new Image();
+            img.onload = () => {
+                this.image.src = media.src;
+                this.image.alt = media.alt || media.title;
+                console.log('✅ Lightbox image loaded successfully:', media.src);
+            };
+            img.onerror = () => {
+                console.error('❌ Failed to load lightbox image:', media.src);
+                this.image.src = media.src; // Try anyway
+                this.image.alt = media.alt || media.title;
+            };
+            img.src = media.src; // Trigger load
             
             // Update caption
             this.caption.textContent = media.title;
