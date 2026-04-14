@@ -1,8 +1,8 @@
-# Firebase Credentials & Config
-firebase-config.js
+# Firebase Config - NOW ALLOWED (needed for live site)
+# firebase-config.js
 
-# Allow template file
-!firebase-config.template.js
+# Template file (backup)
+firebase-config.template.js
 
 # Documentation Files (Internal Use Only)
 *.md
