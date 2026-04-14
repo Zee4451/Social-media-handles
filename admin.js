@@ -301,6 +301,17 @@ if (mediaFileInput) {
 function openGalleryModal(item = null) {
     galleryForm.reset();
     document.getElementById('gallery-item-key').value = '';
+    uploadedFileURL = null;
+    
+    // Clear file input
+    if (mediaFileInput) {
+        mediaFileInput.value = '';
+    }
+    
+    // Hide upload progress
+    if (uploadProgress) {
+        uploadProgress.style.display = 'none';
+    }
     
     if (item) {
         modalTitle.textContent = 'Edit Gallery Item';
@@ -326,6 +337,18 @@ function openGalleryModal(item = null) {
 
 function closeGalleryModal() {
     galleryModal.classList.remove('active');
+    galleryForm.reset();
+    uploadedFileURL = null;
+    
+    // Clear file input
+    if (mediaFileInput) {
+        mediaFileInput.value = '';
+    }
+    
+    // Hide upload progress
+    if (uploadProgress) {
+        uploadProgress.style.display = 'none';
+    }
 }
 
 galleryForm.addEventListener('submit', async (e) => {
@@ -338,9 +361,18 @@ galleryForm.addEventListener('submit', async (e) => {
     const description = document.getElementById('media-description').value;
     const poster = document.getElementById('media-poster').value;
     
+    // Validate that either URL or file upload is provided
+    if (!src && !uploadedFileURL) {
+        showToast('Please provide a media URL or upload a file', 'error');
+        return;
+    }
+    
+    // Use uploaded file URL if available, otherwise use manual URL
+    const finalSrc = uploadedFileURL || src;
+    
     const itemData = {
         type,
-        src,
+        src: finalSrc,
         title,
         description
     };
@@ -359,6 +391,9 @@ galleryForm.addEventListener('submit', async (e) => {
             await GalleryCRUD.addItem(database, itemData);
             showToast('Gallery item added successfully!', 'success');
         }
+        
+        // Reset uploaded file URL
+        uploadedFileURL = null;
         
         closeGalleryModal();
         await loadGalleryItems();
