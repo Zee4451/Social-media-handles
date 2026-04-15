@@ -13,14 +13,14 @@
     <meta name="keywords" content="dance crew, performing arts, choreography, S Factor, dance performances, entertainment">
     <meta name="author" content="S. Factor Dance Crew">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0a0a0f">
-    <meta name="msapplication-TileColor" content="#e63946">
+    <meta name="theme-color" content="#FAFAF7">
+    <meta name="msapplication-TileColor" content="#B8172B">
     <title>S. Factor Dance Crew</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     
     <!-- JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
@@ -58,6 +58,13 @@
     </script>
 </head>
 <body>
+    <!-- Frame-by-Frame SVG Loader -->
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+        <div class="loader-container">
+            <div id="loader-frame" class="loader-frame"></div>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="head">
             <h1>S. Factor Dance Crew</h1>
@@ -69,7 +76,7 @@
         </div>
         
         <div class="image-container">
-            <img src="./sfactor.png" alt="S. Factor Dance Crew" loading="lazy">
+            <img src="assets/images/sfactor.png" alt="S. Factor Dance Crew" loading="lazy">
         </div>
         
         <!-- Photo Gallery Section -->
@@ -90,7 +97,7 @@
                     <div class="gallery-track">
                         <!-- Gallery Item 1 -->
                         <div class="gallery-item">
-                            <img src="./gallery/performance-1.jpg" alt="S. Factor Dance Crew - Stage Performance" loading="lazy">
+                            <img src="assets/gallery/performance-1.jpg" alt="S. Factor Dance Crew - Stage Performance" loading="lazy">
                             <div class="gallery-overlay">
                                 <div class="overlay-content">
                                     <h3>Stage Performance</h3>
@@ -104,7 +111,7 @@
                         
                         <!-- Gallery Item 2 -->
                         <div class="gallery-item">
-                            <img src="./gallery/performance-2.jpg" alt="S. Factor Dance Crew - Group Choreography" loading="lazy">
+                            <img src="assets/gallery/performance-2.jpg" alt="S. Factor Dance Crew - Group Choreography" loading="lazy">
                             <div class="gallery-overlay">
                                 <div class="overlay-content">
                                     <h3>Group Choreography</h3>
@@ -118,7 +125,7 @@
                         
                         <!-- Gallery Item 3 -->
                         <div class="gallery-item">
-                            <img src="./gallery/performance-3.jpg" alt="S. Factor Dance Crew - Rehearsal Session" loading="lazy">
+                            <img src="assets/gallery/performance-3.jpg" alt="S. Factor Dance Crew - Rehearsal Session" loading="lazy">
                             <div class="gallery-overlay">
                                 <div class="overlay-content">
                                     <h3>Rehearsal Session</h3>
@@ -132,8 +139,8 @@
                         
                         <!-- Gallery Item 4 - VIDEO -->
                         <div class="gallery-item video-item">
-                            <video class="gallery-video" preload="metadata" poster="./videos/video-1-poster.jpg">
-                                <source src="./videos/performance-video-1.mp4" type="video/mp4">
+                            <video class="gallery-video" preload="metadata" poster="assets/videos/video-1-poster.jpg">
+                                <source src="assets/videos/performance-video-1.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <div class="video-overlay">
@@ -155,7 +162,7 @@
                         
                         <!-- Gallery Item 5 -->
                         <div class="gallery-item">
-                            <img src="./gallery/performance-5.jpg" alt="S. Factor Dance Crew - Team Photo" loading="lazy">
+                            <img src="assets/gallery/performance-5.jpg" alt="S. Factor Dance Crew - Team Photo" loading="lazy">
                             <div class="gallery-overlay">
                                 <div class="overlay-content">
                                     <h3>Team Photo</h3>
@@ -169,8 +176,8 @@
                         
                         <!-- Gallery Item 6 - VIDEO -->
                         <div class="gallery-item video-item">
-                            <video class="gallery-video" preload="metadata" poster="./videos/video-2-poster.jpg">
-                                <source src="./videos/performance-video-2.mp4" type="video/mp4">
+                            <video class="gallery-video" preload="metadata" poster="assets/videos/video-2-poster.jpg">
+                                <source src="assets/videos/performance-video-2.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <div class="video-overlay">
@@ -320,6 +327,6 @@
         }
     </script>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="assets/js/script.js"></script>
 </body>
 </html>
