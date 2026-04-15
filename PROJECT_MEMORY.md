@@ -47,7 +47,6 @@ Business Info:
 
 Key Features:
 - Three.js particle background with dance-themed animations
-- Custom cursor with trail effects
 - Interactive 3D tilt and parallax effects
 - Keyboard-controlled dance moves (S, B, P, W keys)
 - Audio visualization and beat synchronization
@@ -546,7 +545,6 @@ Contains:
 - Dance-themed particle creation
 - Cursor particle trail system
 - Animation loop with requestAnimationFrame
-- Custom cursor implementation
 - Audio visualization simulation
 - Beat synchronization with audio analysis
 - Keyboard dance moves handler
@@ -562,7 +560,6 @@ Key Functions:
 - createCursorParticles(): Creates trail particles
 - animate(): Main animation loop
 - addKeyboardDanceMoves(): Keyboard controls
-- addCustomCursor(): Custom cursor with GSAP
 - simulateAudioVisualization(): Audio bars
 - addBeatSynchronization(): Audio analysis
 - optimizePerformance(): Low-end device detection
@@ -662,7 +659,6 @@ const CONFIG = {
     // Timing (milliseconds)
     AUDIO_VISUALIZATION_DELAY: 1500,      // Before audio viz starts
     GSAP_LOAD_DELAY: 2000,                // Before loading GSAP
-    CURSOR_INIT_DELAY: 1000,              // Before custom cursor
     DEVICE_MOTION_DELAY: 2000,            // Before motion tracking
     BEAT_SYNC_DELAY: 2000,                // Before beat sync
     PERFORMANCE_CHECK_DELAY: 3000,        // Before perf optimization
@@ -941,8 +937,8 @@ Security Checklist:
 
 1. Reduced Motion Support:
    - Detects `prefers-reduced-motion: reduce`
-   - Disables custom cursor if user prefers reduced motion
    - Respects user OS-level preferences
+   - Adjusts animation intensity accordingly
 
 2. Semantic HTML:
    - Proper heading hierarchy (h1, h2)
@@ -1644,7 +1640,7 @@ Fix: Used browser console computed hashes
 Lesson: NEVER guess SRI hashes. Always get from cdnjs.com or browser console.
 
 ### 2025-04-14: GSAP Undefined Errors
-Issue: Custom cursor and dance moves crashed when GSAP not loaded
+Issue: Dance moves crashed when GSAP not loaded
 Impact: JavaScript errors, broken functionality
 Root Cause: Assumed GSAP always available
 Fix: Added typeof checks and fallback animations
@@ -1720,7 +1716,6 @@ Functional Tests:
 - [ ] All social media buttons work
 - [ ] Dance toggle button shows/hides guide
 - [ ] Keyboard keys (S, B, P, W, ?) trigger animations
-- [ ] Custom cursor appears and follows mouse
 - [ ] Three.js particles animate in background
 - [ ] Contact information displays correctly
 - [ ] Image loads with lazy loading
