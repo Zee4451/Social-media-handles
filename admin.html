@@ -123,22 +123,22 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" id="poster-group" style="display: none;">
-                                <label for="media-poster">Video Poster URL (Optional if uploading file)</label>
-                                <input type="text" id="media-poster" placeholder="./videos/poster.jpg or https://...">
-                                <small>Thumbnail shown before video plays</small>
-                            </div>
-
                             <div class="form-group" id="poster-upload-group" style="display: none;">
-                                <label>Or Upload Poster File (Recommended)</label>
+                                <label>Upload Poster/Thumbnail File (Recommended)</label>
                                 <input type="file" id="poster-file" accept="image/*" class="file-input">
-                                <small>Upload poster/thumbnail from your device</small>
+                                <small>📷 Upload poster from your device - shows before video plays</small>
                                 <div id="poster-upload-progress" class="upload-progress" style="display: none;">
                                     <div class="progress-bar">
                                         <div class="progress-fill" id="poster-progress-fill"></div>
                                     </div>
                                     <span id="poster-progress-text">Uploading... 0%</span>
                                 </div>
+                            </div>
+
+                            <div class="form-group" id="poster-group" style="display: none;">
+                                <label for="media-poster">Or Use Poster URL (Optional)</label>
+                                <input type="text" id="media-poster" placeholder="./videos/poster.jpg or https://...">
+                                <small>Alternative: Provide a URL instead of uploading</small>
                             </div>
 
                             <div class="form-group">
