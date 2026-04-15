@@ -1,5 +1,5 @@
 # AI MEMORY FILE - S. Factor Dance Crew Project
-# Last Updated: 2025-04-15
+# Last Updated: 2026-04-15
 # PURPOSE: This file contains ALL project knowledge. Read this file at session start to understand the complete project context.
 # INSTRUCTION: Update this file whenever changes are made to the project.
 
@@ -740,49 +740,119 @@ NEVER:
 - Forget crossorigin="anonymous" attribute
 
 ================================================================================
-## 8. COLOR SCHEME & DESIGN TOKENS
+## 8. COLOR SCHEME & DESIGN TOKENS (UPDATED: 2026-04-15)
 ================================================================================
 
-Located in: style.css (lines 1-20)
+Located in: style.css (lines 2-40)
+
+### Professional Color Palette (Current):
 
 ```css
 :root {
-    /* Primary Colors */
-    --primary: #ff2a6d;         /* Main brand (pink) */
-    --primary-light: #ff619b;   /* Lighter pink */
-    --primary-dark: #d10045;    /* Darker pink */
+    /* Primary Brand - Refined Crimson (energetic yet professional) */
+    --primary: #e63946;           /* Sophisticated crimson red */
+    --primary-light: #f2848f;     /* Soft rose for highlights */
+    --primary-dark: #b5172e;      /* Deep burgundy for depth */
     
-    /* Secondary Colors */
-    --secondary: #05d9e8;       /* Accent (cyan) */
-    --secondary-dark: #038e99;  /* Darker cyan */
+    /* Secondary - Muted Teal (complementary, not competing) */
+    --secondary: #2a9d8f;         /* Professional teal */
+    --secondary-dark: #1f7a6f;    /* Darker teal for depth */
     
-    /* Accent */
-    --accent: #ffdc3c;          /* Highlight (yellow) */
+    /* Accent - Warm Gold (premium feel, minimal usage) */
+    --accent: #e9c46a;            /* Elegant gold for special elements */
     
-    /* Backgrounds */
-    --dark: #1a1a2e;            /* Dark blue-gray */
-    --darker: #0f0f1a;          /* Very dark */
-    --background: #121212;      /* Page background */
-    --surface: #1f1f1f;         /* Card background */
+    /* Backgrounds - Rich Dark Tones */
+    --dark: #1a1a2e;              /* Dark blue-gray */
+    --darker: #0f0f1a;            /* Very dark */
+    --background: #0a0a0f;        /* Page background - deeper, premium */
+    --surface: #16161e;           /* Card background - warmer dark */
+    --surface-light: #1e1e28;     /* Lighter surface for layers */
     
-    /* Text */
-    --light: #ffffff;           /* White text */
-    --text-primary: #ffffff;    /* Primary text */
-    --text-secondary: #b3b3b3;  /* Secondary text */
+    /* Text - Improved Readability */
+    --light: #ffffff;             /* White text */
+    --text-primary: #f5f5f5;      /* Primary text - softer than pure white */
+    --text-secondary: #9a9ab0;    /* Secondary text - cooler gray */
+    --text-muted: #6b6b80;        /* Muted text for less important content */
     
-    /* Effects */
-    --border: rgba(255, 255, 255, 0.1);
-    --shadow: rgba(0, 0, 0, 0.3);
+    /* Effects - Subtle & Professional */
+    --border: rgba(255, 255, 255, 0.08);
+    --border-light: rgba(255, 255, 255, 0.04);
+    --shadow: rgba(0, 0, 0, 0.4);
+    --glow: rgba(230, 57, 70, 0.15);
+    
+    /* Gradients - Controlled & Elegant */
     --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --gradient-subtle: linear-gradient(135deg, rgba(230, 57, 70, 0.1) 0%, rgba(42, 157, 143, 0.1) 100%);
     --gradient-alt: linear-gradient(45deg, var(--secondary) 0%, var(--accent) 100%);
+    --gradient-overlay: linear-gradient(180deg, rgba(10, 10, 15, 0) 0%, rgba(10, 10, 15, 0.8) 100%);
 }
 ```
 
-Design Philosophy:
-- Dark theme with vibrant accents
-- Neon glow effects
-- Dance/energy aesthetic
-- High contrast for readability
+### Old Color Palette (Before Redesign - 2026-04-15):
+
+```css
+:root {
+    --primary: #ff2a6d;           /* Bright neon pink - REPLACED */
+    --primary-light: #ff619b;     /* Lighter pink - REPLACED */
+    --primary-dark: #d10045;      /* Darker pink - REPLACED */
+    --secondary: #05d9e8;         /* Vibrant cyan - REPLACED */
+    --secondary-dark: #038e99;    /* Darker cyan - REPLACED */
+    --accent: #ffdc3c;            /* Bright yellow - REPLACED */
+    --background: #121212;        /* Pure dark - REPLACED */
+    --surface: #1f1f1f;           /* Dark gray - REPLACED */
+    --text-primary: #ffffff;      /* Pure white - REPLACED */
+    --text-secondary: #b3b3b3;    /* Warm gray - REPLACED */
+    --border: rgba(255, 255, 255, 0.1);  /* More visible - REPLACED */
+    --shadow: rgba(0, 0, 0, 0.3);        /* Lighter shadow - REPLACED */
+}
+```
+
+### Design Philosophy:
+- **Sophisticated Dark Theme**: Rich, deep backgrounds with subtle warmth
+- **Refined Accent Colors**: Single primary accent (crimson) with controlled usage
+- **Professional Hierarchy**: Clear visual importance through color saturation
+- **Modern Elegance**: Inspired by premium dance/performance brands
+- **Maintain Energy**: Keep subtle vibrancy to represent dance/performance arts
+- **Accessibility**: Improved contrast ratios meeting WCAG AA standards
+
+### Color Usage Guidelines:
+
+**Primary Color (#e63946 - Crimson):**
+- Use for: Main CTAs, active states, important highlights, brand identity
+- Avoid: Large background areas, body text
+
+**Secondary Color (#2a9d8f - Teal):**
+- Use for: Gradients, secondary accents, hover states, complementary elements
+- Avoid: Primary buttons, primary text
+
+**Accent Color (#e9c46a - Gold):**
+- Use for: Special badges, premium indicators, rare highlights, awards
+- Avoid: Regular UI elements, large areas, body text
+
+**Background Colors:**
+- `--background` (#0a0a0f): Main page background
+- `--surface` (#16161e): Card/container backgrounds
+- `--surface-light` (#1e1e28): Layered elements, overlays, modals
+
+**Text Colors:**
+- `--text-primary` (#f5f5f5): Main headings, important text
+- `--text-secondary` (#9a9ab0): Descriptions, secondary information
+- `--text-muted` (#6b6b80): Timestamps, less important details
+
+### Visual Impact:
+
+**Before Redesign:**
+- Bright neon pink and cyan competing for attention
+- Yellow accent added to visual chaos
+- Appeared playful but unprofessional
+- Overly saturated colors caused eye strain
+
+**After Redesign:**
+- Sophisticated crimson red as primary (energetic but refined)
+- Muted teal provides depth without distraction
+- Gold accent used sparingly for premium feel
+- Rich dark backgrounds create elegant contrast
+- Overall impression: Professional dance company with artistic flair
 
 ================================================================================
 ## 9. PERFORMANCE OPTIMIZATIONS
@@ -977,6 +1047,12 @@ SEO Testing Tools:
 **DEVICE COMPATIBILITY: Laptop/Desktop Only**
 This feature requires a physical keyboard and is hidden on mobile devices (< 768px).
 
+**Mobile Hiding (Updated: 2026-04-15):**
+- Dance toggle button: Hidden via CSS media query (display: none)
+- Dance moves guide container: Hidden via CSS media query (display: none !important)
+- Both elements hidden on screens < 768px width
+- Implemented in style.css @media (max-width: 768px) block
+
 Dance Moves (when GSAP is loaded):
 - S: Spin move (360° particle rotation)
 - B: Bounce effect (elastic Y-axis movement)
@@ -1147,9 +1223,58 @@ Implementation Details:
 - Semantic HTML structure
 
 ### Responsive Breakpoints:
-- **Desktop (> 768px):** Full navigation arrows, 400px images
-- **Tablet (768px):** Smaller arrows (40px), 300px images
-- **Mobile (< 480px):** Hide arrows (use swipe), 250px images
+- **Desktop (> 768px):** Full navigation arrows, 400px images, 80px video play button
+- **Tablet (768px):** Smaller arrows (40px), 300px images, 60px video play button, reduced spacing
+- **Mobile (< 480px):** Hide arrows (use swipe), 250px images, 50px video play button, optimized overlays
+
+**Mobile Responsiveness Features (Updated: 2026-04-15):**
+1. **Overflow Protection:**
+   - `box-sizing: border-box` on gallery section
+   - `overflow-x: hidden` to prevent horizontal scroll
+   - `max-width: 100%` on mobile breakpoints
+
+2. **Image/Video Sizing:**
+   - Desktop: 400px height
+   - Tablet (768px): 300px height with `width: 100%`
+   - Mobile (480px): 250px height
+   - All use `object-fit: cover` for proper aspect ratio
+
+3. **Navigation Controls:**
+   - Desktop/Tablet: Visible navigation arrows (50px/40px)
+   - Mobile (< 480px): Arrows hidden, swipe-only navigation
+   - Touch-friendly indicators (44px minimum touch targets)
+
+4. **Video Play Button:**
+   - Desktop: 80px diameter
+   - Tablet (768px): 60px diameter
+   - Mobile (480px): 50px diameter with 2px border
+
+5. **Text Overlay Optimizations:**
+   - Desktop: h3 (1.3rem), p (0.9rem)
+   - Tablet (768px): h3 (1.1rem), p (0.85rem)
+   - Mobile (480px): h3 (1rem), p (0.75rem)
+   - Reduced padding on smaller screens
+
+6. **Touch Optimizations (768px and below):**
+   - Minimum 44px touch targets for gallery zoom button
+   - Gallery indicators: Small visual dots (8-12px) with 44px invisible touch area via `::before` pseudo-element
+   - Active state feedback on gallery items (`:active` transform)
+   - Disabled text selection (`user-select: none`)
+   - Removed tap highlight color for cleaner touch experience
+   - Passive touch event listeners for better performance
+
+7. **Spacing and Layout:**
+   - Gallery section padding: 0 (no horizontal padding at any breakpoint)
+   - Gallery section margin: 40px → 30px → 25px (desktop → tablet → mobile)
+   - Carousel gap: 15px → 10px → 0px
+   - Container border radius: 15px → 10px → 8px
+   - Indicator dots: 12px → 10px → 8px
+
+8. **Lightbox Navigation Fix (2026-04-15):**
+   - Fixed hover state shifting issue on `.lightbox-nav` buttons
+   - Preserved `transform: translateY(-50%)` in hover state to maintain vertical centering
+   - Combined transforms: `transform: translateY(-50%) scale(1.1)`
+   - Separated `.lightbox-close:hover` and `.lightbox-nav:hover` rules to handle different transform requirements
 
 ### Customization Options:
 ```javascript
@@ -1188,6 +1313,22 @@ handleSwipe() { const swipeThreshold = 80; }
 - [ ] Video posters load correctly
 - [ ] Video badge shows on video items
 - [ ] Responsive layout works at all breakpoints
+
+**Mobile Responsiveness Tests (Updated: 2026-04-15):**
+- [ ] No horizontal scroll on any mobile device (overflow-x: hidden working)
+- [ ] Gallery images scale correctly at 768px (300px) and 480px (250px)
+- [ ] Videos display properly with centered play buttons (60px/50px)
+- [ ] Navigation arrows hidden on mobile (< 480px)
+- [ ] Touch/swipe gestures work smoothly on mobile
+- [ ] Overlay text readable on all screen sizes (h3 and p properly scaled)
+- [ ] Indicators and counter properly sized on mobile
+- [ ] Lightbox works on mobile with proper controls
+- [ ] All touch targets minimum 44px (accessibility compliant)
+- [ ] No overlapping elements on any screen size
+- [ ] Proper spacing and padding at all breakpoints
+- [ ] Active touch feedback works on gallery items
+- [ ] Text selection disabled on mobile (user-select: none)
+- [ ] No tap highlight color on mobile devices
 
 ================================================================================
 ## 15. KNOWN ISSUES & SOLUTIONS
@@ -1666,6 +1807,41 @@ INSTRUCTIONS FOR AI:
 4. Update this file when making changes
 5. Never lose this knowledge between sessions
 
+CRITICAL WORKFLOW INSTRUCTIONS (ADDED: 2026-04-15):
+⚠️ MANDATORY WORKFLOW - MUST FOLLOW EVERY TIME:
+
+BEFORE MAKING ANY CHANGES:
+1. ALWAYS read this PROJECT_MEMORY.md file completely first
+2. Understand the current implementation from this file
+3. Check relevant sections (file details, configurations, patterns)
+4. THEN proceed with user's request
+
+WHEN USER REQUESTS CHANGES:
+1. Read PROJECT_MEMORY.md to understand current state
+2. Check which files need to be modified
+3. Review existing code patterns and guidelines in this file
+4. Make the changes user requested
+5. Update PROJECT_MEMORY.md with ALL changes made
+   - Update file sizes if significant
+   - Add new features to relevant sections
+   - Update configuration constants if changed
+   - Add new issues/solutions if encountered
+   - Update "Last Updated" date
+   - Document what was changed and why
+
+AFTER COMPLETING CHANGES:
+1. Update PROJECT_MEMORY.md with all modifications
+2. RE-READ the entire PROJECT_MEMORY.md file
+3. Verify all information is accurate and current
+4. This prevents memory loss and hallucination in future sessions
+5. Ensure consistency across all documented sections
+
+NEVER SKIP THESE STEPS:
+- Never make changes without reading this file first
+- Never forget to update this file after changes
+- Never skip re-reading this file after updates
+- This file is your ONLY source of truth for project context
+
 IMPORTANT REMINDERS:
 - SRI hashes must be validated, never guessed
 - Always use CONFIG constants
@@ -1689,3 +1865,17 @@ IMPORTANT REMINDERS:
 
 CONTACT FOR UPDATES:
 If you need to update this memory file, edit it directly and maintain the same structure.
+
+================================================================================
+## FINAL CRITICAL INSTRUCTION
+================================================================================
+
+⚠️ AFTER EVERY SESSION AND EVERY CHANGE:
+1. This PROJECT_MEMORY.md file MUST be re-read completely
+2. Verify all information is current and accurate
+3. This ensures NO knowledge is lost between sessions
+4. This prevents AI hallucination and maintains context
+5. This file is the SINGLE SOURCE OF TRUTH for the entire project
+
+REMEMBER: READ → UNDERSTAND → CHANGE → UPDATE → RE-READ
+This cycle MUST be followed for EVERY user request.

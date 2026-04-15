@@ -1,22 +1,41 @@
 /* Core Styles with Dance Crew Theme */
 :root {
-    --primary: #ff2a6d;
-    --primary-light: #ff619b;
-    --primary-dark: #d10045;
-    --secondary: #05d9e8;
-    --secondary-dark: #038e99;
-    --accent: #ffdc3c;
-    --dark: #1a1a2e;
-    --darker: #0f0f1a;
-    --light: #ffffff;
-    --background: #121212;
-    --surface: #1f1f1f;
-    --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
-    --border: rgba(255, 255, 255, 0.1);
-    --shadow: rgba(0, 0, 0, 0.3);
+    /* Primary Brand - Refined Crimson (energetic yet professional) */
+    --primary: #e63946;           /* Sophisticated crimson red */
+    --primary-light: #f2848f;     /* Soft rose for highlights */
+    --primary-dark: #b5172e;      /* Deep burgundy for depth */
+    
+    /* Secondary - Muted Teal (complementary, not competing) */
+    --secondary: #2a9d8f;         /* Professional teal */
+    --secondary-dark: #1f7a6f;    /* Darker teal for depth */
+    
+    /* Accent - Warm Gold (premium feel, minimal usage) */
+    --accent: #e9c46a;            /* Elegant gold for special elements */
+    
+    /* Backgrounds - Rich Dark Tones */
+    --dark: #1a1a2e;              /* Dark blue-gray */
+    --darker: #0f0f1a;            /* Very dark */
+    --background: #0a0a0f;        /* Page background - deeper, premium */
+    --surface: #16161e;           /* Card background - warmer dark */
+    --surface-light: #1e1e28;     /* Lighter surface for layers */
+    
+    /* Text - Improved Readability */
+    --light: #ffffff;             /* White text */
+    --text-primary: #f5f5f5;      /* Primary text - softer than pure white */
+    --text-secondary: #9a9ab0;    /* Secondary text - cooler gray */
+    --text-muted: #6b6b80;        /* Muted text for less important content */
+    
+    /* Effects - Subtle & Professional */
+    --border: rgba(255, 255, 255, 0.08);
+    --border-light: rgba(255, 255, 255, 0.04);
+    --shadow: rgba(0, 0, 0, 0.4);
+    --glow: rgba(230, 57, 70, 0.15);
+    
+    /* Gradients - Controlled & Elegant */
     --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --gradient-subtle: linear-gradient(135deg, rgba(230, 57, 70, 0.1) 0%, rgba(42, 157, 143, 0.1) 100%);
     --gradient-alt: linear-gradient(45deg, var(--secondary) 0%, var(--accent) 100%);
+    --gradient-overlay: linear-gradient(180deg, rgba(10, 10, 15, 0) 0%, rgba(10, 10, 15, 0.8) 100%);
 }
 
 html, body {
@@ -43,7 +62,7 @@ body {
     position: relative;
     overflow-x: hidden;
     background-image: 
-        radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.1) 0%, rgba(5, 217, 232, 0.1) 90%),
+        radial-gradient(circle at 10% 20%, rgba(230, 57, 70, 0.06) 0%, rgba(42, 157, 143, 0.06) 90%),
         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
@@ -55,8 +74,8 @@ body::before {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at top right, rgba(255, 42, 109, 0.2) 0%, transparent 40%),
-        radial-gradient(circle at bottom left, rgba(5, 217, 232, 0.2) 0%, transparent 40%);
+        radial-gradient(circle at top right, rgba(230, 57, 70, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at bottom left, rgba(42, 157, 143, 0.08) 0%, transparent 40%);
     pointer-events: none;
     z-index: -1;
 }
@@ -572,9 +591,28 @@ body::before {
         font-size: 1.5rem;
     }
     
+    /* Gallery Section - Small Mobile */
+    .gallery-section {
+        margin: 25px auto;
+        padding: 0;
+    }
+    
     .gallery-title {
         font-size: 1.3rem;
         gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .gallery-title i {
+        font-size: 1.3rem;
+    }
+    
+    .gallery-carousel {
+        gap: 0;
+    }
+    
+    .gallery-container {
+        border-radius: 8px;
     }
     
     .gallery-item img {
@@ -589,18 +627,110 @@ body::before {
         display: none; /* Hide arrows on mobile, use swipe */
     }
     
+    /* Video play button - even smaller */
+    .video-play-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        border-width: 2px;
+    }
+    
+    .video-badge {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+    
+    /* Overlay optimizations */
+    .gallery-overlay {
+        padding: 15px 12px 12px;
+    }
+    
     .overlay-content h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 3px;
     }
     
     .overlay-content p {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
     
+    .gallery-zoom {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Touch-friendly indicators */
+    .gallery-indicators {
+        gap: 6px;
+        margin-top: 12px;
+    }
+    
+    .indicator {
+        width: 8px;
+        height: 8px;
+        border-width: 1px;
+    }
+    
+    .gallery-counter {
+        font-size: 0.85rem;
+        margin-top: 10px;
+    }
+    
+    .gallery-counter .current {
+        font-size: 1rem;
+    }
+    
+    /* Lightbox mobile optimizations */
     .lightbox-caption {
         font-size: 1rem;
         padding: 10px 15px;
         bottom: 20px;
+    }
+    
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* Mobile Touch Optimizations */
+@media (max-width: 768px) {
+    /* Ensure touch targets are minimum 44px for gallery zoom button */
+    .gallery-zoom {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Indicator: Keep visual dot small but make clickable area larger */
+    .indicator {
+        position: relative;
+        /* Visual dot stays small */
+        /* width/height controlled by breakpoint-specific rules above */
+    }
+    
+    /* Add invisible touch-friendly hit area around indicator */
+    .indicator::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 44px;
+        height: 44px;
+        background: transparent;
+    }
+    
+    /* Improve touch feedback */
+    .gallery-item:active img {
+        transform: scale(1.05);
+    }
+    
+    /* Prevent text selection on touch */
+    .gallery-section {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
     }
 }
 
@@ -825,7 +955,9 @@ body::before {
     width: 100%;
     max-width: 900px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .gallery-title {
@@ -1146,11 +1278,16 @@ body::before {
     font-size: 1.5rem;
 }
 
-.lightbox-close:hover,
-.lightbox-nav:hover {
+.lightbox-close:hover {
     background: var(--primary);
     border-color: var(--primary);
     transform: scale(1.1);
+}
+
+.lightbox-nav:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
 }
 
 .lightbox-nav {
@@ -1185,23 +1322,83 @@ body::before {
         display: none;
     }
     
+    .dance-moves-guide {
+        display: none !important;
+    }
+    
+    /* Gallery Section Mobile Fixes */
     .gallery-section {
         margin: 30px auto;
-        padding: 0 15px;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .gallery-carousel {
+        gap: 10px;
+    }
+    
+    .gallery-container {
+        border-radius: 10px;
     }
     
     .gallery-item img {
         height: 300px;
+        width: 100%;
     }
     
     .gallery-video {
         height: 300px;
+        width: 100%;
     }
     
     .gallery-nav {
         width: 40px;
         height: 40px;
         font-size: 1rem;
+        flex-shrink: 0;
+    }
+    
+    /* Video play button - reduce size */
+    .video-play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    /* Overlay text adjustments */
+    .gallery-overlay {
+        padding: 20px 15px 15px;
+    }
+    
+    .overlay-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .overlay-content p {
+        font-size: 0.85rem;
+    }
+    
+    .gallery-zoom {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Indicators and counter */
+    .gallery-indicators {
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .gallery-counter {
+        font-size: 0.9rem;
+        margin-top: 12px;
     }
     
     .lightbox-nav {
