@@ -35,6 +35,7 @@ const modalClose = document.querySelector('.modal-close');
 const modalCancel = document.querySelector('.modal-cancel');
 const mediaTypeSelect = document.getElementById('media-type');
 const posterGroup = document.getElementById('poster-group');
+const posterUploadGroup = document.getElementById('poster-upload-group');
 
 // Toast
 const toast = document.getElementById('toast');
@@ -243,7 +244,9 @@ galleryModal.addEventListener('click', (e) => {
 });
 
 mediaTypeSelect.addEventListener('change', () => {
-    posterGroup.style.display = mediaTypeSelect.value === 'video' ? 'flex' : 'none';
+    const isVideo = mediaTypeSelect.value === 'video';
+    posterGroup.style.display = isVideo ? 'flex' : 'none';
+    posterUploadGroup.style.display = isVideo ? 'flex' : 'none';
 });
 
 // File upload handling
@@ -300,19 +303,88 @@ if (mediaFileInput) {
     });
 }
 
+// Poster file upload handling
+const posterFileInput = document.getElementById('poster-file');
+const posterUploadProgress = document.getElementById('poster-upload-progress');
+const posterProgressFill = document.getElementById('poster-progress-fill');
+const posterProgressText = document.getElementById('poster-progress-text');
+let uploadedPosterURL = null;
+
+if (posterFileInput) {
+    posterFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // Validate file
+        const validation = validateFile(file, { maxSize: 10 * 1024 * 1024 }); // 10MB max for posters
+        if (!validation.valid) {
+            showToast(validation.error, 'error');
+            posterFileInput.value = '';
+            return;
+        }
+        
+        const fileType = getFileType(file);
+        if (fileType !== 'image') {
+            showToast('Poster must be an image file', 'error');
+            posterFileInput.value = '';
+            return;
+        }
+        
+        // Show progress bar
+        posterUploadProgress.style.display = 'block';
+        posterProgressFill.style.width = '0%';
+        posterProgressText.textContent = 'Uploading poster... 0%';
+        
+        try {
+            // Upload poster to Cloudinary
+            uploadedPosterURL = await uploadToCloudinary(file, 'posters', (progress) => {
+                posterProgressFill.style.width = `${progress}%`;
+                posterProgressText.textContent = `Uploading poster... ${progress}%`;
+            });
+            
+            // Update progress to 100%
+            posterProgressFill.style.width = '100%';
+            posterProgressText.textContent = 'Poster upload complete!';
+            
+            // Auto-fill the poster URL field
+            document.getElementById('media-poster').value = uploadedPosterURL;
+            
+            showToast('Poster uploaded successfully!', 'success');
+            
+            // Hide progress after 2 seconds
+            setTimeout(() => {
+                posterUploadProgress.style.display = 'none';
+            }, 2000);
+        } catch (error) {
+            console.error('Poster upload error:', error);
+            showToast('Failed to upload poster: ' + error.message, 'error');
+            posterUploadProgress.style.display = 'none';
+        }
+    });
+}
+
 function openGalleryModal(item = null) {
     galleryForm.reset();
     document.getElementById('gallery-item-key').value = '';
     uploadedFileURL = null;
+    uploadedPosterURL = null;
     
     // Clear file input
     if (mediaFileInput) {
         mediaFileInput.value = '';
     }
     
+    if (posterFileInput) {
+        posterFileInput.value = '';
+    }
+    
     // Hide upload progress
     if (uploadProgress) {
         uploadProgress.style.display = 'none';
+    }
+    
+    if (posterUploadProgress) {
+        posterUploadProgress.style.display = 'none';
     }
     
     if (item) {
@@ -325,13 +397,16 @@ function openGalleryModal(item = null) {
         
         if (item.type === 'video') {
             posterGroup.style.display = 'flex';
+            posterUploadGroup.style.display = 'flex';
             document.getElementById('media-poster').value = item.poster || '';
         } else {
             posterGroup.style.display = 'none';
+            posterUploadGroup.style.display = 'none';
         }
     } else {
         modalTitle.textContent = 'Add Gallery Item';
         posterGroup.style.display = 'none';
+        posterUploadGroup.style.display = 'none';
     }
     
     galleryModal.classList.add('active');
@@ -341,15 +416,24 @@ function closeGalleryModal() {
     galleryModal.classList.remove('active');
     galleryForm.reset();
     uploadedFileURL = null;
+    uploadedPosterURL = null;
     
     // Clear file input
     if (mediaFileInput) {
         mediaFileInput.value = '';
     }
     
+    if (posterFileInput) {
+        posterFileInput.value = '';
+    }
+    
     // Hide upload progress
     if (uploadProgress) {
         uploadProgress.style.display = 'none';
+    }
+    
+    if (posterUploadProgress) {
+        posterUploadProgress.style.display = 'none';
     }
 }
 
@@ -372,6 +456,9 @@ galleryForm.addEventListener('submit', async (e) => {
     // Use uploaded file URL if available, otherwise use manual URL
     const finalSrc = uploadedFileURL || src;
     
+    // Use uploaded poster URL if available, otherwise use manual poster URL
+    const finalPoster = uploadedPosterURL || poster;
+    
     const itemData = {
         type,
         src: finalSrc,
@@ -379,8 +466,8 @@ galleryForm.addEventListener('submit', async (e) => {
         description
     };
     
-    if (type === 'video' && poster) {
-        itemData.poster = poster;
+    if (type === 'video' && finalPoster) {
+        itemData.poster = finalPoster;
     }
     
     try {
@@ -394,8 +481,9 @@ galleryForm.addEventListener('submit', async (e) => {
             showToast('Gallery item added successfully!', 'success');
         }
         
-        // Reset uploaded file URL
+        // Reset uploaded file URLs
         uploadedFileURL = null;
+        uploadedPosterURL = null;
         
         closeGalleryModal();
         await loadGalleryItems();
