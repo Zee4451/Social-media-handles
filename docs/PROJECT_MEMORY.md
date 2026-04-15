@@ -83,7 +83,8 @@ Social-media-handles/
 │   │   ├── config.js (4.0KB)               # Configuration constants & social links
 │   │   ├── utils.js (7.4KB)                # Utility functions & cleanup helpers
 │   │   ├── firebase-config.js (10.2KB)     # Firebase configuration & CRUD operations
-│   │   └── admin.js (14.8KB)               # Admin panel JavaScript
+│   │   ├── admin.js (14.8KB)               # Admin panel JavaScript
+│   │   └── cloudinary-config.js (6.8KB)    # Cloudinary media upload configuration
 │   ├── 📁 images/
 │   │   └── sfactor.png (96.2KB)       # Dance crew logo/image
 │   ├── 📁 audio/
@@ -107,7 +108,8 @@ Media Files: ~3.7MB (sfactor.png + makee.mp3)
 - Clean root directory for Netlify deployment
 - Organized asset types (css/, js/, images/, audio/, gallery/, videos/)
 - Centralized documentation in docs/ folder
-- Removed unused files (generate-placeholders.html, cloudinary-config.js, cors.json)
+- Removed unused files (generate-placeholders.html, cors.json)
+- Restored cloudinary-config.js (required for admin panel media uploads)
 - All functionality preserved with updated paths
 
 ================================================================================
