@@ -123,23 +123,31 @@ export async function deleteFile(fileURL) {
 /**
  * Initialize Firebase
  * 
+ * @async
  * @function initializeFirebase
- * @returns {Object} Firebase app instance
- */
-export function initializeFirebase() {
-    const { initializeApp } = require('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js');
-    return initializeApp(firebaseConfig);
-}
-
-/**
- * Get Firebase Database instance
+ * @returns {Promise<Object>} Object containing app, database, and auth instances
  * 
- * @function getDatabase
- * @returns {Object} Firebase database instance
+ * @example
+ * const { app, database, auth } = await initializeFirebase();
  */
-export function getDatabase() {
-    const { getDatabase } = require('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js');
-    return getDatabase();
+export async function initializeFirebase() {
+    try {
+        // Import Firebase modules dynamically
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js');
+        const { getDatabase } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js');
+        const { getAuth } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js');
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        
+        console.log('Firebase initialized successfully');
+        return { app, database, auth };
+    } catch (error) {
+        console.error('Firebase initialization failed:', error);
+        throw error;
+    }
 }
 
 /**
