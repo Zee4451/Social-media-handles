@@ -1,6 +1,6 @@
-# Credential Files (NEVER commit - personal project)
-firebase-config.js
-cloudinary-config.js
+# Credential Files (deployed to Netlify for personal project)
+# firebase-config.js
+# cloudinary-config.js
 
 # Internal Documentation (not for public repository)
 CLOUDINARY_*.md

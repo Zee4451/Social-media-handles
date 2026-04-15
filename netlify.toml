@@ -2,10 +2,10 @@
 # https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
-  # Publish directory
+  # No build command needed for static site
   publish = "."
-  # Build command: generate config files from environment variables
-  command = "node build-config.js"
+  # No build process required
+  command = ""
 
 # Redirects and rewrite rules
 [[redirects]]
