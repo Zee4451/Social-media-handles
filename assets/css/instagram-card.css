@@ -106,42 +106,44 @@
     object-fit: cover;
 }
 
-/* Video Play Overlay */
-.video-play-overlay {
+/* Double-Tap Heart Animation */
+.double-tap-heart {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 80px;
+    color: #FFFFFF;
+    opacity: 0;
     pointer-events: none;
+    z-index: 20;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
 }
 
-.video-play-btn {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    color: #000000;
-    font-size: 24px;
-    cursor: pointer;
-    pointer-events: all;
-    transition: transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.double-tap-heart.animate {
+    animation: heartBurst 0.8s ease-out forwards;
 }
 
-.video-play-btn:hover {
-    transform: scale(1.1);
-}
-
-.video-play-btn i {
-    margin-left: 4px;
+@keyframes heartBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    15% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 1;
+    }
+    30% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    70% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
 }
 
 /* Carousel Dots */
@@ -205,7 +207,7 @@
     transform: translateY(-50%) scale(1.1);
 }
 
-/* Mute Button */
+/* Mute/Unmute Button */
 .mute-btn {
     position: absolute;
     bottom: 16px;
@@ -218,10 +220,55 @@
     color: #FFFFFF;
     font-size: 16px;
     cursor: pointer;
-    display: flex;
+    display: none; /* Hidden by default, shown for videos */
     align-items: center;
     justify-content: center;
     z-index: 10;
+    transition: opacity 0.2s ease;
+}
+
+.mute-btn.visible {
+    display: flex;
+}
+
+.mute-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Video Progress Bar */
+.video-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.card-media:hover .video-progress {
+    opacity: 1;
+}
+
+.video-progress-bar {
+    height: 100%;
+    background: #FFFFFF;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* Lazy Loading Placeholder */
+.media-item.loading {
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 /* Section 3: Action Bar */
@@ -257,8 +304,33 @@
     color: #ed4956;
 }
 
+/* Like Button - Active State */
+.action-btn.like-btn.liked {
+    color: #ed4956;
+    animation: likeButtonPop 0.3s ease;
+}
+
+.action-btn.like-btn.liked i {
+    font-weight: 900; /* Solid heart */
+}
+
+@keyframes likeButtonPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
 .action-btn.save-btn:hover {
     color: #f5c518;
+}
+
+/* Save Button - Active State */
+.action-btn.save-btn.saved {
+    color: #FFFFFF;
+}
+
+.action-btn.save-btn.saved i {
+    font-weight: 900; /* Solid bookmark */
 }
 
 /* Section 4: Caption */
@@ -335,9 +407,15 @@
         font-size: 13px;
     }
     
-    .video-play-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 20px;
+    .double-tap-heart {
+        font-size: 60px;
     }
+}
+
+/* Toast Animation */
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
 }

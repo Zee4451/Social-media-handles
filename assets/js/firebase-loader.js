@@ -33,15 +33,12 @@ function updateGalleryFromFirebase(items) {
         
         if (isVideo) {
             mediaItem.innerHTML = `
-                <video class="gallery-video" preload="metadata" poster="${item.poster || ''}">
+                <video class="gallery-video" preload="metadata" poster="${item.poster || ''}" muted playsinline loop>
                     <source src="${item.src}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <div class="video-play-overlay">
-                    <button class="video-play-btn" aria-label="Play video">
-                        <i class="fas fa-play"></i>
-                    </button>
-                </div>
+                <!-- Double-tap heart animation container -->
+                <div class="double-tap-heart"></div>
             `;
         } else {
             mediaItem.innerHTML = `

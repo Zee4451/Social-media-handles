@@ -12,12 +12,17 @@
 const GalleryCarousel = {
     track: null,
     items: [],
-    indicators: [],
+    carouselDots: [],
     currentIndex: 0,
     totalSlides: 6,
     autoPlayInterval: null,
     autoPlayDelay: 4000,
     isTransitioning: false,
+    isMuted: true,
+    lastTapTime: 0,
+    lastTapTarget: null,
+    isVisible: false,
+    progressInterval: null,
     
     init() {
         this.track = document.querySelector('.media-track');
@@ -28,47 +33,40 @@ const GalleryCarousel = {
         
         this.totalSlides = this.items.length;
         this.bindEvents();
+        this.setupIntersectionObserver();
+        this.setupTabVisibility();
         this.startAutoPlay();
-        // Counter removed - Instagram UI
+        
+        // Setup initial slide
+        this.updateCurrentSlide();
     },
     
     bindEvents() {
+        // Navigation
         document.querySelector('.media-nav.prev')?.addEventListener('click', () => this.prev());
         document.querySelector('.media-nav.next')?.addEventListener('click', () => this.next());
         
+        // Carousel dots
         this.carouselDots.forEach((indicator, index) => {
             indicator.addEventListener('click', () => this.goTo(index));
         });
         
-        document.querySelectorAll('.media-item').forEach((btn, index) => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                Lightbox.open(index);
-            });
-        });
+        // Double-tap for like
+        this.track.addEventListener('click', (e) => this.handleDoubleTap(e));
         
-        document.querySelectorAll('.media-item:not(.video-item)').forEach((item, index) => {
-            item.addEventListener('click', () => Lightbox.open(index));
-        });
+        // Like button
+        document.querySelector('.like-btn')?.addEventListener('click', () => this.toggleLike());
         
-        document.querySelectorAll('.video-play-btn').forEach((btn, index) => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const videoItem = btn.closest('.video-item');
-                const video = videoItem.querySelector('.gallery-video');
-                this.toggleVideoPlay(video, btn);
-            });
-        });
+        // Save button
+        document.querySelector('.save-btn')?.addEventListener('click', () => this.toggleSave());
         
-        document.querySelectorAll('.gallery-video').forEach((video) => {
-            video.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const videoItem = video.closest('.video-item');
-                const playBtn = videoItem.querySelector('.video-play-btn');
-                this.toggleVideoPlay(video, playBtn);
-            });
-        });
+        // Share button
+        document.querySelector('.share-btn')?.addEventListener('click', () => this.handleShare());
         
+        // Mute button
+        document.querySelector('.mute-btn')?.addEventListener('click', () => this.toggleMute());
+        
+        // Touch/swipe
         let touchStartX = 0;
         let touchEndX = 0;
         
@@ -82,17 +80,6 @@ const GalleryCarousel = {
             this.handleSwipe(touchStartX, touchEndX);
             this.startAutoPlay();
         }, { passive: true });
-        
-        this.track.addEventListener('mouseenter', () => {
-            if (!this.isVideoPlaying()) {
-                this.pauseAutoPlay();
-            }
-        });
-        this.track.addEventListener('mouseleave', () => {
-            if (!this.isVideoPlaying()) {
-                this.startAutoPlay();
-            }
-        });
     },
     
     next() {
@@ -109,6 +96,10 @@ const GalleryCarousel = {
         if (this.isTransitioning || index === this.currentIndex) return;
         
         this.isTransitioning = true;
+        
+        // Pause current video before sliding
+        this.pauseActiveVideo();
+        
         this.currentIndex = index;
         
         const offset = -index * 100;
@@ -119,11 +110,18 @@ const GalleryCarousel = {
             ind.setAttribute('aria-selected', i === index);
         });
         
-        // Counter removed - Instagram UI
+        // Update caption
+        this.updateCaption(index);
         
+        // Show/hide mute button based on media type
+        this.updateMuteButton(index);
+        
+        // Play new video after transition
         setTimeout(() => {
             this.isTransitioning = false;
-        }, 600);
+            this.playActiveVideo();
+            this.startProgressTracking();
+        }, 400);
     },
     
     handleSwipe(startX, endX) {
@@ -148,50 +146,267 @@ const GalleryCarousel = {
         }
     },
     
-    updateCounter() {
-        const currentEl = document.querySelector('.gallery-counter .current');
-        if (currentEl) {
-            currentEl.textContent = this.currentIndex + 1;
-        }
-    },
+    // Instagram-style Video Control Methods
     
-    toggleVideoPlay(video, playBtn) {
-        if (video.paused) {
-            this.pauseAllVideos();
-            video.play();
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            playBtn.style.opacity = '0.8';
-            this.pauseAutoPlay();
-        } else {
-            video.pause();
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.style.opacity = '1';
-            this.startAutoPlay();
+    playActiveVideo() {
+        const activeItem = this.items[this.currentIndex];
+        if (!activeItem || !activeItem.classList.contains('video-item')) return;
+        
+        const video = activeItem.querySelector('.gallery-video');
+        if (video) {
+            video.muted = this.isMuted;
+            video.play().catch(err => {
+                console.log('Autoplay prevented:', err);
+            });
         }
-    },
+    }
+    
+    pauseActiveVideo() {
+        const activeItem = this.items[this.currentIndex];
+        if (!activeItem || !activeItem.classList.contains('video-item')) return;
+        
+        const video = activeItem.querySelector('.gallery-video');
+        if (video && !video.paused) {
+            video.pause();
+        }
+    }
     
     pauseAllVideos() {
         document.querySelectorAll('.gallery-video').forEach(video => {
             if (!video.paused) {
                 video.pause();
-                const videoItem = video.closest('.video-item');
-                const playBtn = videoItem.querySelector('.video-play-btn');
-                if (playBtn) {
-                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    playBtn.style.opacity = '1';
-                }
             }
         });
     },
     
-    isVideoPlaying() {
-        let playing = false;
+    // Double-Tap Like Handler
+    handleDoubleTap(e) {
+        const now = Date.now();
+        const target = e.target.closest('.media-item');
+        
+        if (!target) return;
+        
+        // Check if double-tap (within 300ms)
+        if (now - this.lastTapTime < 300 && this.lastTapTarget === target) {
+            // Trigger like
+            this.triggerLike();
+            
+            // Show heart animation
+            this.showHeartAnimation(target);
+        }
+        
+        this.lastTapTime = now;
+        this.lastTapTarget = target;
+    }
+    
+    showHeartAnimation(mediaItem) {
+        const heartContainer = mediaItem.querySelector('.double-tap-heart');
+        if (!heartContainer) return;
+        
+        // Create heart icon
+        heartContainer.innerHTML = '<i class="fas fa-heart"></i>';
+        
+        // Trigger animation
+        heartContainer.classList.remove('animate');
+        void heartContainer.offsetWidth; // Force reflow
+        heartContainer.classList.add('animate');
+        
+        // Clean up after animation
+        setTimeout(() => {
+            heartContainer.classList.remove('animate');
+            heartContainer.innerHTML = '';
+        }, 800);
+    }
+    
+    // Like Button Handler
+    triggerLike() {
+        const likeBtn = document.querySelector('.like-btn');
+        if (!likeBtn) return;
+        
+        const isLiked = likeBtn.classList.contains('liked');
+        
+        if (!isLiked) {
+            likeBtn.classList.add('liked');
+            likeBtn.querySelector('i').className = 'fas fa-heart'; // Solid heart
+        }
+    }
+    
+    toggleLike() {
+        const likeBtn = document.querySelector('.like-btn');
+        if (!likeBtn) return;
+        
+        const isLiked = likeBtn.classList.toggle('liked');
+        const icon = likeBtn.querySelector('i');
+        
+        if (isLiked) {
+            icon.className = 'fas fa-heart'; // Solid
+            this.showHeartAnimation(this.items[this.currentIndex]);
+        } else {
+            icon.className = 'far fa-heart'; // Outline
+        }
+    }
+    
+    // Save Button Handler
+    toggleSave() {
+        const saveBtn = document.querySelector('.save-btn');
+        if (!saveBtn) return;
+        
+        const isSaved = saveBtn.classList.toggle('saved');
+        const icon = saveBtn.querySelector('i');
+        
+        icon.className = isSaved ? 'fas fa-bookmark' : 'far fa-bookmark';
+    }
+    
+    // Share Button Handler
+    async handleShare() {
+        const currentMedia = this.items[this.currentIndex];
+        const video = currentMedia?.querySelector('.gallery-video');
+        const img = currentMedia?.querySelector('img');
+        const mediaUrl = video?.querySelector('source')?.src || img?.src;
+        
+        const shareData = {
+            title: 'S. Factor Dance Crew',
+            text: 'Check out this amazing performance!',
+            url: mediaUrl || window.location.href
+        };
+        
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                // Fallback: copy to clipboard
+                await navigator.clipboard.writeText(shareData.url);
+                this.showToast('Link copied to clipboard!');
+            }
+        } catch (err) {
+            console.log('Share cancelled:', err);
+        }
+    }
+    
+    // Mute Button Handler
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        const muteBtn = document.querySelector('.mute-btn');
+        const icon = muteBtn?.querySelector('i');
+        
+        // Update all videos
         document.querySelectorAll('.gallery-video').forEach(video => {
-            if (!video.paused) {
-                playing = true;
+            video.muted = this.isMuted;
+        });
+        
+        // Update icon
+        if (icon) {
+            icon.className = this.isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+        }
+    }
+    
+    updateMuteButton(index) {
+        const muteBtn = document.querySelector('.mute-btn');
+        const activeItem = this.items[index];
+        
+        if (activeItem?.classList.contains('video-item')) {
+            muteBtn?.classList.add('visible');
+        } else {
+            muteBtn?.classList.remove('visible');
+        }
+    },
+    
+    // Progress Bar Tracking
+    startProgressTracking() {
+        this.stopProgressTracking();
+        
+        const activeItem = this.items[this.currentIndex];
+        if (!activeItem || !activeItem.classList.contains('video-item')) return;
+        
+        const video = activeItem.querySelector('.gallery-video');
+        const progressBar = document.querySelector('.video-progress-bar');
+        
+        if (!video || !progressBar) return;
+        
+        this.progressInterval = setInterval(() => {
+            if (video.duration) {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+        }, 100);
+    },
+    
+    stopProgressTracking() {
+        if (this.progressInterval) {
+            clearInterval(this.progressInterval);
+            this.progressInterval = null;
+        }
+    },
+    
+    // Intersection Observer for Autoplay/Pause
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                this.isVisible = entry.isIntersecting;
+                
+                if (entry.isIntersecting) {
+                    this.playActiveVideo();
+                    this.startAutoPlay();
+                } else {
+                    this.pauseAllVideos();
+                    this.pauseAutoPlay();
+                }
+            });
+        }, {
+            threshold: 0.5 // 50% visible
+        });
+        
+        observer.observe(document.querySelector('.card-media'));
+    },
+    
+    // Tab Visibility Handler
+    setupTabVisibility() {
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.pauseAllVideos();
+                this.pauseAutoPlay();
+            } else if (this.isVisible) {
+                this.playActiveVideo();
+                this.startAutoPlay();
             }
         });
-        return playing;
+    },
+    
+    // Helper Methods
+    updateCaption(index) {
+        const captionContent = document.querySelector('.caption-content');
+        const currentMedia = this.items[index];
+        
+        if (!captionContent || !currentMedia) return;
+        
+        const title = currentMedia.querySelector('h3')?.textContent || '';
+        captionContent.textContent = title;
+    },
+    
+    updateCurrentSlide() {
+        this.updateCaption(this.currentIndex);
+        this.updateMuteButton(this.currentIndex);
+    },
+    
+    showToast(message) {
+        // Simple toast notification
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: fadeInOut 2s ease;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
     }
 };
 
