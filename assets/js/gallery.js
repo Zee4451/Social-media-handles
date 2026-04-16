@@ -22,7 +22,7 @@ const GalleryCarousel = {
     init() {
         this.track = document.querySelector('.media-track');
         this.items = document.querySelectorAll('.media-item');
-        this.carousel-dots = document.querySelectorAll('.carousel-dot');
+        this.carouselDots = document.querySelectorAll('.carousel-dot');
         
         if (!this.track || this.items.length === 0) return;
         
@@ -36,7 +36,7 @@ const GalleryCarousel = {
         document.querySelector('.media-nav.prev')?.addEventListener('click', () => this.prev());
         document.querySelector('.media-nav.next')?.addEventListener('click', () => this.next());
         
-        this.carousel-dots.forEach((indicator, index) => {
+        this.carouselDots.forEach((indicator, index) => {
             indicator.addEventListener('click', () => this.goTo(index));
         });
         
@@ -114,7 +114,7 @@ const GalleryCarousel = {
         const offset = -index * 100;
         this.track.style.transform = `translateX(${offset}%)`;
         
-        this.carousel-dots.forEach((ind, i) => {
+        this.carouselDots.forEach((ind, i) => {
             ind.classList.toggle('active', i === index);
             ind.setAttribute('aria-selected', i === index);
         });
