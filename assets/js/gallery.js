@@ -159,7 +159,7 @@ const GalleryCarousel = {
                 console.log('Autoplay prevented:', err);
             });
         }
-    }
+    },
     
     pauseActiveVideo() {
         const activeItem = this.items[this.currentIndex];
@@ -169,7 +169,7 @@ const GalleryCarousel = {
         if (video && !video.paused) {
             video.pause();
         }
-    }
+    },
     
     pauseAllVideos() {
         document.querySelectorAll('.gallery-video').forEach(video => {
@@ -197,7 +197,7 @@ const GalleryCarousel = {
         
         this.lastTapTime = now;
         this.lastTapTarget = target;
-    }
+    },
     
     showHeartAnimation(mediaItem) {
         const heartContainer = mediaItem.querySelector('.double-tap-heart');
@@ -216,7 +216,7 @@ const GalleryCarousel = {
             heartContainer.classList.remove('animate');
             heartContainer.innerHTML = '';
         }, 800);
-    }
+    },
     
     // Like Button Handler
     triggerLike() {
@@ -229,7 +229,7 @@ const GalleryCarousel = {
             likeBtn.classList.add('liked');
             likeBtn.querySelector('i').className = 'fas fa-heart'; // Solid heart
         }
-    }
+    },
     
     toggleLike() {
         const likeBtn = document.querySelector('.like-btn');
@@ -244,7 +244,7 @@ const GalleryCarousel = {
         } else {
             icon.className = 'far fa-heart'; // Outline
         }
-    }
+    },
     
     // Save Button Handler
     toggleSave() {
@@ -255,7 +255,7 @@ const GalleryCarousel = {
         const icon = saveBtn.querySelector('i');
         
         icon.className = isSaved ? 'fas fa-bookmark' : 'far fa-bookmark';
-    }
+    },
     
     // Share Button Handler
     async handleShare() {
@@ -281,7 +281,7 @@ const GalleryCarousel = {
         } catch (err) {
             console.log('Share cancelled:', err);
         }
-    }
+    },
     
     // Mute Button Handler
     toggleMute() {
@@ -298,7 +298,7 @@ const GalleryCarousel = {
         if (icon) {
             icon.className = this.isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
         }
-    }
+    },
     
     updateMuteButton(index) {
         const muteBtn = document.querySelector('.mute-btn');
