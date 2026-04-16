@@ -20,34 +20,34 @@ const GalleryCarousel = {
     isTransitioning: false,
     
     init() {
-        this.track = document.querySelector('.gallery-track');
-        this.items = document.querySelectorAll('.gallery-item');
-        this.indicators = document.querySelectorAll('.indicator');
+        this.track = document.querySelector('.media-track');
+        this.items = document.querySelectorAll('.media-item');
+        this.carousel-dots = document.querySelectorAll('.carousel-dot');
         
         if (!this.track || this.items.length === 0) return;
         
         this.totalSlides = this.items.length;
         this.bindEvents();
         this.startAutoPlay();
-        this.updateCounter();
+        // Counter removed - Instagram UI
     },
     
     bindEvents() {
-        document.querySelector('.gallery-nav.prev')?.addEventListener('click', () => this.prev());
-        document.querySelector('.gallery-nav.next')?.addEventListener('click', () => this.next());
+        document.querySelector('.media-nav.prev')?.addEventListener('click', () => this.prev());
+        document.querySelector('.media-nav.next')?.addEventListener('click', () => this.next());
         
-        this.indicators.forEach((indicator, index) => {
+        this.carousel-dots.forEach((indicator, index) => {
             indicator.addEventListener('click', () => this.goTo(index));
         });
         
-        document.querySelectorAll('.gallery-zoom').forEach((btn, index) => {
+        document.querySelectorAll('.media-item').forEach((btn, index) => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 Lightbox.open(index);
             });
         });
         
-        document.querySelectorAll('.gallery-item:not(.video-item)').forEach((item, index) => {
+        document.querySelectorAll('.media-item:not(.video-item)').forEach((item, index) => {
             item.addEventListener('click', () => Lightbox.open(index));
         });
         
@@ -114,12 +114,12 @@ const GalleryCarousel = {
         const offset = -index * 100;
         this.track.style.transform = `translateX(${offset}%)`;
         
-        this.indicators.forEach((ind, i) => {
+        this.carousel-dots.forEach((ind, i) => {
             ind.classList.toggle('active', i === index);
             ind.setAttribute('aria-selected', i === index);
         });
         
-        this.updateCounter();
+        // Counter removed - Instagram UI
         
         setTimeout(() => {
             this.isTransitioning = false;
@@ -213,7 +213,7 @@ const Lightbox = {
         if (!this.modal) return;
         
         this.images = [];
-        document.querySelectorAll('.gallery-item').forEach((item, index) => {
+        document.querySelectorAll('.media-item').forEach((item, index) => {
             const isVideo = item.classList.contains('video-item');
             
             if (isVideo) {

@@ -5,7 +5,7 @@
  * from Firebase Realtime Database.
  * 
  * @module FirebaseLoader
- * @version 1.0.0
+ * @version 2.0.0 (Instagram Card UI - 2026-04-15)
  */
 
 /**
@@ -13,76 +13,64 @@
  * @param {Array} items - Gallery items from Firebase
  */
 function updateGalleryFromFirebase(items) {
-    const galleryTrack = document.querySelector('.gallery-track');
-    const indicators = document.querySelector('.gallery-indicators');
+    const mediaTrack = document.querySelector('.media-track');
+    const carouselDots = document.querySelector('.carousel-dots');
+    const captionContent = document.querySelector('.caption-content');
+    const timestampText = document.querySelector('.timestamp-text');
     
-    if (!galleryTrack) return;
+    if (!mediaTrack) return;
     
     // Clear existing content
-    galleryTrack.innerHTML = '';
-    if (indicators) indicators.innerHTML = '';
+    mediaTrack.innerHTML = '';
+    if (carouselDots) carouselDots.innerHTML = '';
     
     // Add items from Firebase
     items.forEach((item, index) => {
         const isVideo = item.type === 'video';
         
-        const galleryItem = document.createElement('div');
-        galleryItem.className = `gallery-item ${isVideo ? 'video-item' : ''}`;
+        const mediaItem = document.createElement('div');
+        mediaItem.className = `media-item ${isVideo ? 'video-item' : ''}`;
         
         if (isVideo) {
-            galleryItem.innerHTML = `
+            mediaItem.innerHTML = `
                 <video class="gallery-video" preload="metadata" poster="${item.poster || ''}">
                     <source src="${item.src}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <div class="video-overlay">
+                <div class="video-play-overlay">
                     <button class="video-play-btn" aria-label="Play video">
                         <i class="fas fa-play"></i>
                     </button>
                 </div>
-                <div class="gallery-overlay">
-                    <div class="overlay-content">
-                        <h3>${item.title}</h3>
-                        <p>${item.description || ''}</p>
-                        <span class="video-badge"><i class="fas fa-video"></i> Video</span>
-                    </div>
-                    <button class="gallery-zoom" aria-label="View fullscreen">
-                        <i class="fas fa-expand"></i>
-                    </button>
-                </div>
             `;
         } else {
-            galleryItem.innerHTML = `
+            mediaItem.innerHTML = `
                 <img src="${item.src}" alt="${item.title}" loading="lazy">
-                <div class="gallery-overlay">
-                    <div class="overlay-content">
-                        <h3>${item.title}</h3>
-                        <p>${item.description || ''}</p>
-                    </div>
-                    <button class="gallery-zoom" aria-label="View full size">
-                        <i class="fas fa-search-plus"></i>
-                    </button>
-                </div>
             `;
         }
         
-        galleryTrack.appendChild(galleryItem);
+        mediaTrack.appendChild(mediaItem);
         
-        // Add indicator
-        if (indicators) {
-            const indicator = document.createElement('button');
-            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
-            indicator.setAttribute('role', 'tab');
-            indicator.setAttribute('aria-selected', index === 0);
-            indicator.setAttribute('aria-label', `Photo ${index + 1}`);
-            indicators.appendChild(indicator);
+        // Add carousel dot
+        if (carouselDots) {
+            const dot = document.createElement('button');
+            dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-selected', index === 0);
+            dot.setAttribute('aria-label', `Media ${index + 1}`);
+            carouselDots.appendChild(dot);
         }
     });
     
-    // Update counter
-    const counterTotal = document.querySelector('.gallery-counter .total');
-    if (counterTotal) {
-        counterTotal.textContent = items.length;
+    // Update caption with first item's title
+    if (captionContent && items.length > 0) {
+        captionContent.textContent = items[0].title || '';
+    }
+    
+    // Update timestamp
+    if (timestampText) {
+        const now = new Date();
+        timestampText.textContent = `${now.toLocaleDateString()} · S. Factor Dance Crew`;
     }
     
     // Re-initialize gallery carousel and lightbox
@@ -99,102 +87,63 @@ function updateGalleryFromFirebase(items) {
  * @param {Object} links - Social links from Firebase
  */
 function updateSocialLinksFromFirebase(links) {
-    // Access SocialLinks from global scope
-    const SocialLinks = window.SocialLinks;
-    if (!SocialLinks) return;
-    
-    if (links.facebook?.url) SocialLinks.facebook = links.facebook.url;
-    if (links.instagram?.url) SocialLinks.instagram = links.instagram.url;
-    if (links.whatsapp?.url) SocialLinks.whatsapp = links.whatsapp.url;
-    if (links.telegram?.url) SocialLinks.telegram = links.telegram.url;
-    if (links.contact?.url) SocialLinks.contact = links.contact.url;
-    if (links.gmail?.url) SocialLinks.gmail = links.gmail.url;
+    document.querySelectorAll('.social-btn[data-link]').forEach(btn => {
+        const linkType = btn.dataset.link;
+        if (links[linkType]) {
+            btn.onclick = () => {
+                window.open(links[linkType], '_blank', 'noopener,noreferrer');
+            };
+        }
+    });
 }
 
 /**
- * Update contact information from Firebase
- * @param {Object} contact - Contact info from Firebase
+ * Update contact info from Firebase
+ * @param {Object} contact - Contact information from Firebase
  */
 function updateContactFromFirebase(contact) {
-    const phoneElement = document.querySelector('.contact-item span');
-    const emailElement = document.querySelectorAll('.contact-item span')[1];
-    const directorElement = document.querySelector('.proprietor .name');
-    
-    if (contact.phone && phoneElement) {
-        phoneElement.textContent = contact.phone;
-    }
-    if (contact.email && emailElement) {
-        emailElement.textContent = contact.email;
-    }
-    if (contact.director && directorElement) {
-        directorElement.textContent = contact.director;
+    const contactItems = document.querySelectorAll('.contact-item span');
+    if (contactItems.length >= 2) {
+        if (contact.phone) contactItems[0].textContent = contact.phone;
+        if (contact.email) contactItems[1].textContent = contact.email;
     }
 }
 
 /**
- * Load dynamic content from Firebase
- * @param {Object} firebaseDatabase - Firebase database instance
- */
-async function loadDynamicContent(firebaseDatabase) {
-    if (!firebaseDatabase) return;
-    
-    try {
-        const { GalleryCRUD, SocialLinksCRUD, ContactCRUD } = await import('./firebase-config.js');
-        
-        // Load gallery items
-        const galleryItems = await GalleryCRUD.getAllItems(firebaseDatabase);
-        if (galleryItems.length > 0) {
-            updateGalleryFromFirebase(galleryItems);
-        }
-        
-        // Load social links
-        const socialLinks = await SocialLinksCRUD.getAllLinks(firebaseDatabase);
-        if (Object.keys(socialLinks).length > 0) {
-            updateSocialLinksFromFirebase(socialLinks);
-        }
-        
-        // Load contact info
-        const contactInfo = await ContactCRUD.getContact(firebaseDatabase);
-        if (Object.keys(contactInfo).length > 0) {
-            updateContactFromFirebase(contactInfo);
-        }
-        
-        console.log('✅ Dynamic content loaded successfully');
-    } catch (error) {
-        console.error('Error loading dynamic content:', error);
-    }
-}
-
-/**
- * Initialize Firebase and load dynamic content
- * @returns {Promise<Object|null>} Firebase database instance or null
+ * Initialize Firebase and load all dynamic content
  */
 async function initializeFirebaseLoader() {
     try {
-        const firebaseModule = await import('./firebase-config.js');
+        const { initializeApp } = await import('./firebase-config.js');
+        const { getDatabase, ref, get } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js');
         
-        if (firebaseModule.isFirebaseConfigured) {
-            const { initializeFirebase } = firebaseModule;
-            const firebase = await initializeFirebase();
-            
-            console.log('✅ Firebase connected - Dynamic content enabled');
-            
-            // Load dynamic content
-            await loadDynamicContent(firebase.database);
-            
-            return firebase.database;
+        const app = initializeApp();
+        const database = getDatabase(app);
+        
+        // Load gallery items
+        const gallerySnapshot = await get(ref(database, 'gallery'));
+        if (gallerySnapshot.exists()) {
+            const items = Object.entries(gallerySnapshot.val()).map(([key, value]) => ({
+                key,
+                ...value
+            }));
+            updateGalleryFromFirebase(items);
+        }
+        
+        // Load social links
+        const socialSnapshot = await get(ref(database, 'socialLinks'));
+        if (socialSnapshot.exists()) {
+            updateSocialLinksFromFirebase(socialSnapshot.val());
+        }
+        
+        // Load contact info
+        const contactSnapshot = await get(ref(database, 'contact'));
+        if (contactSnapshot.exists()) {
+            updateContactFromFirebase(contactSnapshot.val());
         }
     } catch (error) {
-        console.warn('⚠️ Firebase initialization failed, using static content:', error.message);
+        console.error('Error loading Firebase data:', error);
     }
-    
-    return null;
 }
 
-export { 
-    loadDynamicContent, 
-    initializeFirebaseLoader,
-    updateGalleryFromFirebase,
-    updateSocialLinksFromFirebase,
-    updateContactFromFirebase
-};
+export { initializeFirebaseLoader, updateGalleryFromFirebase, updateSocialLinksFromFirebase, updateContactFromFirebase };
