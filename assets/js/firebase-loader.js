@@ -114,10 +114,11 @@ function updateContactFromFirebase(contact) {
  */
 async function initializeFirebaseLoader() {
     try {
-        const { initializeApp } = await import('./firebase-config.js');
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js');
+        const { firebaseConfig } = await import('./firebase-config.js');
         const { getDatabase, ref, get } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js');
         
-        const app = initializeApp();
+        const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         
         // Load gallery items
